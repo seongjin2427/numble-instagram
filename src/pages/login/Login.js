@@ -4,7 +4,7 @@ import {loginAction} from '../../store/actions/login'
 import {useDispatch} from 'react-redux'
 import styled from 'styled-components'
 import {isEmpty} from '../../utils/utility'
-import {supportDeviceSize} from '../../components/styled'
+import {supportDeviceSize} from '../../style/styled'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -62,7 +62,6 @@ const LoginRoot = styled.div`
   justify-content: center;
   width: 1080px;
   height: 100vh;
-  background-color: green;
 
   @media all and (max-width: ${supportDeviceSize}px) {
     width: 100vw;

@@ -3,7 +3,7 @@ import AppHeader from '../components/AppHeader'
 import AppContent from '../components/AppContent'
 import AppFooter from '../components/AppFooter'
 import styled from 'styled-components'
-import {supportDeviceSize} from '../components/styled'
+import {supportDeviceSize} from '../style/styled'
 
 const DefaultLayout = () => {
   /*const navigate = useNavigate()
@@ -22,9 +22,9 @@ const DefaultLayout = () => {
 
   return (
     <Root>
-      <AppHeader />
+      {/* <AppHeader /> */}
       <AppContent />
-      <AppFooter />
+      {/* <AppFooter /> */}
     </Root>
   )
 }
@@ -32,8 +32,8 @@ const DefaultLayout = () => {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1080px;
-  background-color: green;
+  width: 1024px;
+  background-color: white;
 
   @media all and (max-width: ${supportDeviceSize}px) {
     width: 100vw;
