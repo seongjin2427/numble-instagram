@@ -32,8 +32,9 @@ const DefaultLayout = () => {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1024px;
-  background-color: white;
+  width: 446px;
+  padding: 0 15px;
+  background-color: lightpink;
 
   @media all and (max-width: ${supportDeviceSize}px) {
     width: 100vw;

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import {Link, useNavigate} from 'react-router-dom'
 import packageJson from '../../package.json'
-import {ReactComponent as NeordinaryLogo} from '../assets/neordinary-logo.svg'
 
 const AppHeader = () => {
   const navigate = useNavigate()
@@ -14,7 +13,6 @@ const AppHeader = () => {
   return (
     <Header>
       <Wrap>
-        <NeordinaryLogo width='30rem' />
         <HeaderText>
           {process.env.REACT_APP_ENV !== 'production' ? (
             <>
@@ -40,7 +38,7 @@ const AppHeader = () => {
         <Button
           onClick={() => {
             // replace true 는 뒤로가기시 이전 페이지로 안가짐
-            navigate('/dashboard', {replace: true})
+            navigate('/', {replace: true})
           }}
         >
           대시보드로 화면 전환

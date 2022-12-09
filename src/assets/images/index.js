@@ -1,0 +1,6 @@
+export {ReactComponent as AppStoreButton} from './app-store-btn.svg'
+export {ReactComponent as CakeImage} from './cake.svg'
+export {ReactComponent as GooglePlayButton} from './google-play-btn.svg'
+export {ReactComponent as KakaoLoginButton} from './kakao-login-btn.svg'
+export {ReactComponent as WhiteLogo} from './logo-white.svg'
+export {ReactComponent as Logo} from './logo.svg'
