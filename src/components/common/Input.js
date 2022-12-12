@@ -1,16 +1,44 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
+import {useFormContext} from 'react-hook-form'
+import React, {useState, forwardRef} from 'react'
+
 import Icons from './Icons'
 
 // eslint-disable-next-line react/prop-types
-const CommonInput = ({icon, placeholder, isDirty, alert}) => {
+const CommonInput = ({id, icon, placeholder, alert, type, ...args}, ref) => {
+  const [toggle, setToggle] = useState(false)
+  const {watch} = useFormContext()
+  const watchValue = watch(id)
+  const isPassword = type === 'password' ? (toggle ? 'text' : 'password') : undefined
+
+  const onToggle = () => setToggle(!toggle)
+
   return (
     <InputWrapper>
       <Icon>
         <Icons size='20px' icon={icon} />
       </Icon>
-      <Input placeholder={placeholder} maxLength={20} />
-      {isDirty && (alert ? <Icons size='20px' icon='XCircleIcon' /> : <Icons size='20px' icon='CheckCircleIcon' />)}
+      <Input placeholder={placeholder} type={isPassword || type} ref={ref} {...args} />
+
+      {type !== 'password' ? (
+        watchValue &&
+        (alert ? (
+          <Icon>
+            <Icons size='20px' icon='XCircleIcon' />
+          </Icon>
+        ) : (
+          <Icon>
+            <Icons size='20px' icon='CheckCircleIcon' />
+          </Icon>
+        ))
+      ) : (
+        <Wrapper toggle={toggle} onClick={onToggle}>
+          <Icon>
+            <Icons size='20px' icon='CheckCircleIcon' />
+          </Icon>
+          {toggle ? <P>숨기기</P> : <P>비밀번호 표시</P>}
+        </Wrapper>
+      )}
     </InputWrapper>
   )
 }
@@ -29,10 +57,14 @@ const InputWrapper = styled.div`
   border: 1px solid #b2b2b2;
   border-radius: 9999px;
   box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+  svg {
+    stroke: ${({theme}) => theme.colors['gray-500']};
+  }
 `
 
 const Input = styled.input`
-  width: 258px;
+  width: 100%;
   height: 20px;
 
   font-weight: 500;
@@ -47,11 +79,23 @@ const Input = styled.input`
 
 const Icon = styled.i`
   display: flex;
-  align-items: center;
-
-  svg {
-    stroke: ${({theme}) => theme.colors['gray-500']};
-  }
 `
 
-export default CommonInput
+const Wrapper = styled.div`
+  ${({toggle}) => css`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 3px;
+    width: ${toggle ? '120px' : '320px'};
+    cursor: pointer;
+  `}
+`
+
+const P = styled.p`
+  text-align: right;
+  width: 100%;
+  font-weight: 600;
+`
+
+export default forwardRef(CommonInput)

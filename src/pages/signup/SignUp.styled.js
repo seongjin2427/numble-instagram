@@ -4,7 +4,7 @@ const Container = styled.div``
 
 const SignUpArea = styled.div`
   width: 416px;
-  padding: 50px 46px 40px 46px;
+  padding: 50px 46px 25px 46px;
   margin-bottom: 10px;
   border: 1px solid ${({theme}) => theme.colors['gray-200']};
 `
@@ -21,6 +21,14 @@ const Image = styled.img``
 const P = styled.p`
   color: ${({theme}) => theme.colors['gray-500']};
   text-align: center;
+`
+
+const AlertMessage = styled.p`
+  color: ${({theme}) => theme.colors.red};
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  word-break: keep-all;
 `
 
 const Form = styled.form``
@@ -50,4 +58,4 @@ const LoginArea = styled.div`
 
 const DownloadApp = styled.div``
 
-export {Container, SignUpArea, ImageWrapper, Image, P, Form, InputWrapper, LoginArea, DownloadApp}
+export {Container, SignUpArea, ImageWrapper, Image, P, AlertMessage, Form, InputWrapper, LoginArea, DownloadApp}

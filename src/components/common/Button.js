@@ -23,6 +23,7 @@ const RawButton = styled.button`
     cursor: pointer;
 
     :disabled {
+      cursor: default;
       background: ${theme.colors[disabledColor]};
     }
   `};

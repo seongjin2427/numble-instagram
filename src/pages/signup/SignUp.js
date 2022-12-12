@@ -1,4 +1,5 @@
 import React from 'react'
+import {yupResolver} from '@hookform/resolvers/yup'
 import {FormProvider, useForm} from 'react-hook-form'
 
 import Button from '../../components/common/Button'
@@ -10,14 +11,25 @@ import KakaoButton from '../../assets/images/kakao-login-btn.svg'
 import GoogleButton from '../../assets/images/google-play-btn.svg'
 import AppStoreButton from '../../assets/images/app-store-btn.svg'
 import * as S from './SignUp.styled'
+import {SIGN_UP_INPUTS} from '../../constants/signup'
 
 const SignUp = () => {
-  const formMethods = useForm(SIGN_UP_SCHEMA)
-  const {handleSubmit, formState} = formMethods
+  const formMethods = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(SIGN_UP_SCHEMA),
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: {isValid, isDirty, errors},
+  } = formMethods
 
   const onSubmit = data => {
     console.log(data)
   }
+
+  console.log(isValid, isDirty, errors)
 
   return (
     <S.Container>
@@ -35,12 +47,25 @@ const SignUp = () => {
         <FormProvider {...formMethods}>
           <S.Form onSubmit={handleSubmit(onSubmit)}>
             <S.InputWrapper>
-              <CommonInput icon='MailIcon' placeholder='전화번호,사용자 이름 또는 이메일' />
-              <CommonInput icon='UserIcon' placeholder='성명' />
-              <CommonInput icon='SettingsIcon' placeholder='사용자 이름' />
-              <CommonInput icon='LockIcon' placeholder='비밀번호' />
+              {SIGN_UP_INPUTS.map(({id, type, icon, placeholder}) => (
+                <CommonInput
+                  key={id}
+                  id={id}
+                  type={type}
+                  icon={icon}
+                  maxLength={20}
+                  placeholder={placeholder}
+                  alert={errors?.[id]?.message}
+                  {...register(id)}
+                />
+              ))}
             </S.InputWrapper>
-            <Button>가입</Button>
+            <Button disabled={!isValid} style={{marginBottom: '15px'}}>
+              가입
+            </Button>
+            <S.AlertMessage>
+              {errors && (errors?.phone?.message || errors?.name?.message || errors?.userId?.message)}
+            </S.AlertMessage>
           </S.Form>
         </FormProvider>
       </S.SignUpArea>
@@ -52,8 +77,8 @@ const SignUp = () => {
       <S.DownloadApp>
         <S.P style={{marginBottom: '10px'}}>앱을 다운로드 하세요.</S.P>
         <S.ImageWrapper>
-          <S.Image src={GoogleButton} alt='google_play' />
-          <S.Image src={AppStoreButton} alt='app_store' />
+          <S.Image style={{cursor: 'pointer'}} src={GoogleButton} alt='google_play' />
+          <S.Image style={{cursor: 'pointer'}} src={AppStoreButton} alt='app_store' />
         </S.ImageWrapper>
       </S.DownloadApp>
     </S.Container>
