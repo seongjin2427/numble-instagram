@@ -1,23 +1,22 @@
 import {createGlobalStyle} from 'styled-components'
+import reset from 'styled-reset'
 
 export const supportDeviceSize = 446
 
 export const GlobalStyle = createGlobalStyle`
-    html {
-    font-size: 62.5%; 
+    ${reset}
 
-    @media all and (max-width: ${supportDeviceSize}px) {
-        font-size: 31.25%;
+    * {
+        box-sizing: border-box;
     }
-}
 
-body {
-    background: white;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, sans-serif, Roboto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+        font-family: 'SF Pro Display', -apple-system, sans-serif, Roboto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 `

@@ -1,0 +1,53 @@
+import styled, {css} from 'styled-components'
+
+const Container = styled.div``
+
+const SignUpArea = styled.div`
+  width: 416px;
+  padding: 50px 46px 40px 46px;
+  margin-bottom: 10px;
+  border: 1px solid ${({theme}) => theme.colors['gray-200']};
+`
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`
+
+const Image = styled.img``
+
+const P = styled.p`
+  color: ${({theme}) => theme.colors['gray-500']};
+  text-align: center;
+`
+
+const Form = styled.form``
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+`
+
+const LoginArea = styled.div`
+  ${({theme}) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 86px;
+    margin-bottom: 20px;
+    border: 1px solid ${theme.colors['gray-200']};
+
+    em {
+      color: ${theme.colors.blue};
+    }
+  `};
+`
+
+const DownloadApp = styled.div``
+
+export {Container, SignUpArea, ImageWrapper, Image, P, Form, InputWrapper, LoginArea, DownloadApp}
