@@ -14,4 +14,8 @@ const SIGN_UP_SCHEMA = yup.object({
   password: PASSWORD_SCHEMA,
 })
 
-export {SIGN_UP_SCHEMA}
+const DATE_SCHEMA = yup.number()
+
+const BIRTHDAY_SCHEMA = yup.object({date: DATE_SCHEMA, month: DATE_SCHEMA, year: DATE_SCHEMA})
+
+export {SIGN_UP_SCHEMA, BIRTHDAY_SCHEMA}
