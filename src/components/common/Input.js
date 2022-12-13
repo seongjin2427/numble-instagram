@@ -93,8 +93,9 @@ const Wrapper = styled.div`
 `
 
 const P = styled.p`
-  text-align: right;
   width: 100%;
+  color: ${({theme}) => theme.colors['gray-900']};
+  text-align: right;
   font-weight: 600;
 `
 
