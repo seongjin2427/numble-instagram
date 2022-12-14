@@ -5,11 +5,17 @@ import React, {useState, forwardRef} from 'react'
 import Icons from './Icons'
 
 // eslint-disable-next-line react/prop-types
-const CommonInput = ({id, icon, placeholder, alert, type, ...args}, ref) => {
+const CommonInput = ({id, icon, placeholder, alert, type, nextFocus, showCheckCircle = true, ...args}, ref) => {
   const [toggle, setToggle] = useState(false)
-  const {watch} = useFormContext()
+  const {watch, setFocus} = useFormContext()
   const watchValue = watch(id)
   const isPassword = type === 'password' ? (toggle ? 'text' : 'password') : undefined
+
+  const moveCursorNextFocus = e => {
+    if (e.key === 'Enter') {
+      setFocus(nextFocus)
+    }
+  }
 
   const onToggle = () => setToggle(!toggle)
 
@@ -18,9 +24,17 @@ const CommonInput = ({id, icon, placeholder, alert, type, ...args}, ref) => {
       <Icon>
         <Icons size='20px' icon={icon} />
       </Icon>
-      <Input placeholder={placeholder} defaultValue={watchValue} type={isPassword || type} ref={ref} {...args} />
+      <Input
+        placeholder={placeholder}
+        defaultValue={watchValue}
+        type={isPassword || type}
+        onKeyUp={moveCursorNextFocus}
+        ref={ref}
+        {...args}
+      />
 
       {type !== 'password' ? (
+        showCheckCircle &&
         watchValue &&
         (alert ? (
           <Icon>
@@ -33,10 +47,12 @@ const CommonInput = ({id, icon, placeholder, alert, type, ...args}, ref) => {
         ))
       ) : (
         <Wrapper toggle={toggle} onClick={onToggle}>
-          <Icon>
-            <Icons size='20px' icon='CheckCircleIcon' />
-          </Icon>
-          {toggle ? <P>숨기기</P> : <P>비밀번호 표시</P>}
+          {showCheckCircle && (
+            <Icon>
+              <Icons size='20px' icon='CheckCircleIcon' />
+            </Icon>
+          )}
+          {watchValue && (toggle ? <P>숨기기</P> : <P>비밀번호 표시</P>)}
         </Wrapper>
       )}
     </InputWrapper>

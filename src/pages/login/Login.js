@@ -1,106 +1,34 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {loginAction} from '../../store/actions/login'
-import {useDispatch} from 'react-redux'
-import styled from 'styled-components'
-import {isEmpty} from '../../utils/utility'
-import {supportDeviceSize} from '../../style/styled'
+import React from 'react'
+import {Outlet, useNavigate} from 'react-router-dom'
+
+import GoogleButton from '../../assets/images/google-play-btn.svg'
+import AppStoreButton from '../../assets/images/app-store-btn.svg'
+import * as S from './Login.styled'
 
 const LoginPage = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
-  const [name, setName] = useState('')
-
-  // Input 에서 엔터키 누를 경우
-  const onKeyPress = event => {
-    if (event.key === 'Enter') {
-      handleLogin().then()
-    }
-  }
-
-  // 로그인 버튼 클릭
-  const handleLogin = async () => {
-    try {
-      if (isEmpty(name)) {
-        alert('이름을 입력해 주세요.')
-        return
-      }
-
-      //서버통신 코드 작성
-
-      //redux 넣어주기
-      dispatch(loginAction({name: name}))
-
-      navigate(`/`)
-    } catch (error) {
-      alert('네트워크 통신 실패. 잠시후 다시 시도해주세요.')
-    }
-  }
+  const moveToUrl = url => navigate(url)
 
   return (
-    <LoginRoot>
-      <Wrap>
-        <div style={{fontSize: '2.5rem', fontWeight: '600', marginBottom: '4rem'}}>로그인</div>
-        <div style={{fontSize: '1.8rem', fontWeight: '600', marginBottom: '1rem'}}>이름</div>
-        <InputWrap
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder='이름을 입력해주세요.'
-          onKeyPress={onKeyPress}
-        />
-        <LoginButton onClick={handleLogin}>로그인</LoginButton>
-      </Wrap>
-    </LoginRoot>
+    <S.Container>
+      <S.LoginFormArea>
+        <Outlet />
+      </S.LoginFormArea>
+      <S.LoginArea>
+        <S.P style={{fontWeight: 600}}>
+          계정이 없으신가요? <em onClick={() => moveToUrl('/signup')}>가입하기</em>
+        </S.P>
+      </S.LoginArea>
+      <S.DownloadApp>
+        <S.P style={{marginBottom: '10px'}}>앱을 다운로드 하세요.</S.P>
+        <S.ImageWrapper>
+          <S.Image style={{cursor: 'pointer'}} src={GoogleButton} alt='google_play' />
+          <S.Image style={{cursor: 'pointer'}} src={AppStoreButton} alt='app_store' />
+        </S.ImageWrapper>
+      </S.DownloadApp>
+    </S.Container>
   )
 }
-
-const LoginRoot = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 1080px;
-  height: 100vh;
-
-  @media all and (max-width: ${supportDeviceSize}px) {
-    width: 100vw;
-  }
-`
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: center;
-  width: 45rem;
-  height: 30rem;
-  padding: 3rem;
-  border: 0.5rem solid yellow;
-  background-color: red;
-`
-
-const InputWrap = styled.input`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 4rem;
-  padding-left: 1rem;
-  margin-bottom: 6rem;
-`
-
-const LoginButton = styled.div`
-  width: 100%;
-  padding: 1rem;
-  border-radius: 0.6rem;
-  background-color: rgb(59, 105, 246);
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: white;
-  text-align: center;
-  cursor: pointer;
-`
 
 export default LoginPage

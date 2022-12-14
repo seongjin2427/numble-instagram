@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import instance from './instance'
+import ApiConfig from '../dataManager/apiConfig'
 
 const userSignupApi = async data => {
   const {phoneNumber, loginId, password, realName, year, month, date} = data
@@ -14,7 +14,12 @@ const userSignupApi = async data => {
       phoneNumber: phoneNumber.replaceAll('-', ''),
     }
 
-    const {data} = await instance.post('https://api.gridge-test.com/app/sign-up', userInfo)
+    const {data} = await ApiConfig.request({
+      url: 'https://api.gridge-test.com/app/sign-up',
+      data: userInfo,
+      method: 'post',
+    })
+
     console.log(data)
     return data
   } catch (err) {

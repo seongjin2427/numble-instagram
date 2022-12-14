@@ -36,4 +36,13 @@ const MARKETING_AGREED_SCHEMA = yup.object({
   location: MARKETING_SCHEMA,
 })
 
-export {SIGN_UP_SCHEMA, BIRTHDATE_SCHEMA, MARKETING_AGREED_SCHEMA}
+const LOGIN_ID_SCHEMA = yup.string().min(3).max(20).required()
+
+const LOGIN_PASSWORD_SCHEMA = yup.string().min(6).max(20).required()
+
+const LOGIN_SCHEMA = yup.object({
+  loginId: LOGIN_ID_SCHEMA,
+  password: LOGIN_PASSWORD_SCHEMA,
+})
+
+export {SIGN_UP_SCHEMA, BIRTHDATE_SCHEMA, MARKETING_AGREED_SCHEMA, LOGIN_SCHEMA}
