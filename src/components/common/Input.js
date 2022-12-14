@@ -47,7 +47,7 @@ const CommonInput = ({id, icon, placeholder, alert, type, nextFocus, showCheckCi
         ))
       ) : (
         <Wrapper toggle={toggle} onClick={onToggle}>
-          {showCheckCircle && (
+          {watchValue && (
             <Icon>
               <Icons size='20px' icon='CheckCircleIcon' />
             </Icon>

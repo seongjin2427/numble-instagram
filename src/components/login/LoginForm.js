@@ -7,10 +7,10 @@ import {useForm, FormProvider} from 'react-hook-form'
 import Button from '../../components/common/Button'
 import CommonInput from '../../components/common/Input'
 import {LOGIN_SCHEMA} from '../../constants/schema'
-import {LOGIN_INPUTS} from '../../constants/login'
 
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
+import {LOGIN_INPUTS} from '../../constants/login'
 
 const LoginForm = () => {
   const navigate = useNavigate()
@@ -26,8 +26,14 @@ const LoginForm = () => {
     formState: {isValid, errors},
   } = formMethods
 
-  const onSubmit = data => {
+  const onSubmit = (data, e) => {
     console.log(data)
+  }
+
+  const checkKeydown = e => {
+    if (e.code === 'Enter' && e.target.name === 'loginId') {
+      e.preventDefault()
+    }
   }
 
   return (
@@ -36,7 +42,7 @@ const LoginForm = () => {
         <Image src={Logo} alt='logo' />
       </ImageWrapper>
       <FormProvider {...formMethods}>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onKeyDown={e => checkKeydown(e)}>
           <InputWrapper>
             {LOGIN_INPUTS.map(({id, type, icon, placeholder, nextFocus}) => (
               <CommonInput
@@ -45,10 +51,9 @@ const LoginForm = () => {
                 type={type}
                 icon={icon}
                 maxLength={20}
-                placeholder={placeholder}
-                alert={errors?.[id]?.message}
-                showCheckCircle={false}
                 nextFocus={nextFocus}
+                showCheckCircle={false}
+                placeholder={placeholder}
                 {...register(id)}
               />
             ))}
