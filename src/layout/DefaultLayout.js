@@ -1,13 +1,11 @@
 import React from 'react'
 import AppHeader from '../components/AppHeader'
-import AppContent from '../components/AppContent'
 import AppFooter from '../components/AppFooter'
 import styled from 'styled-components'
 import {supportDeviceSize} from '../style/styled'
 import {Outlet} from 'react-router'
 
-// eslint-disable-next-line react/prop-types
-const DefaultLayout = ({children}) => {
+const DefaultLayout = () => {
   /*const navigate = useNavigate()
 
   // Redux 값 불러오기
@@ -36,6 +34,8 @@ const Root = styled.div`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
+  height: 100vh;
+  background: ${({theme}) => theme.colors['gray-50']};
 
   @media all and (max-width: ${supportDeviceSize}px) {
     width: 100vw;

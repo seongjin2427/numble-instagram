@@ -4,7 +4,6 @@ const Container = styled.div``
 
 const LoginFormArea = styled.div`
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   width: 416px;
