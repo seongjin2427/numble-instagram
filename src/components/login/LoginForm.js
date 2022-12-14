@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -11,8 +11,10 @@ import {LOGIN_SCHEMA} from '../../constants/schema'
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
 import {LOGIN_INPUTS} from '../../constants/login'
+import {userLoginApi} from '../../api/login'
 
 const LoginForm = () => {
+  const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
 
   const formMethods = useForm({
@@ -23,11 +25,22 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: {isValid, errors},
+    formState: {isValid},
   } = formMethods
 
-  const onSubmit = (data, e) => {
+  const onSubmit = async data => {
     console.log(data)
+    const {isSuccess, message, result} = await userLoginApi(data)
+
+    if (isSuccess) {
+      const {jwt, loginId} = result
+      localStorage.setItem('access_token', jwt)
+      localStorage.setItem('loginId', loginId)
+      // navigate('/')
+      return
+    }
+
+    setErrorMessage(message)
   }
 
   const checkKeydown = e => {
@@ -66,9 +79,7 @@ const LoginForm = () => {
             <Image src={KakaoButton} alt='kakao' />
           </ImageWrapper>
           <P style={{marginBottom: '10px'}}>비밀번호를 잊으셨나요?</P>
-          <AlertMessage>
-            {errors && (errors?.phone?.message || errors?.name?.message || errors?.userId?.message)}
-          </AlertMessage>
+          {errorMessage && <AlertMessage>{errorMessage}</AlertMessage>}
         </Form>
       </FormProvider>
     </Container>
