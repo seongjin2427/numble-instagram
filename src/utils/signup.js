@@ -1,11 +1,13 @@
 /**
  *
- * @param {number} year: 선택 년도
- * @param {number} month: 선택 월
+ * @param {number} y: 선택 년도
+ * @param {number} m: 선택 월
  * @returns 선택 년도 및 월의 전체 일 배열
  */
-const makeDate = (year, month) => {
-  const date = new Date(year, month + 1, 1, 0) - 1
+const makeDate = (y = 2022, m = 12) => {
+  let year = isNaN(+y) ? 2022 : y
+  let month = isNaN(+m) ? 12 : m
+  const date = new Date(+year, +month, 1, 0, 0, 0, 0) - 1
 
   const endDay = new Date(date).getDate()
   const result = []

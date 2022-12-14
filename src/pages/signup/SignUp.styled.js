@@ -4,7 +4,7 @@ const Container = styled.div``
 
 const SignUpArea = styled.div`
   width: 416px;
-  padding: 50px 46px 25px 46px;
+  padding: 50px 30px 25px 30px;
   margin-bottom: 10px;
   border: 1px solid ${({theme}) => theme.colors['gray-200']};
 `

@@ -32,13 +32,12 @@ const FirstInfo = () => {
   } = formMethods
 
   const onSubmit = data => {
-    console.log(data)
     dispatch(firstUserInfoAction(data))
     navigate('/signup/birthday')
   }
 
   return (
-    <>
+    <Container>
       <ImageWrapper style={{marginBottom: '10px'}}>
         <Image src={Logo} alt='logo' />
       </ImageWrapper>
@@ -73,9 +72,13 @@ const FirstInfo = () => {
           </AlertMessage>
         </Form>
       </FormProvider>
-    </>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  padding: 0 16px;
+`
 
 const ImageWrapper = styled.div`
   display: flex;

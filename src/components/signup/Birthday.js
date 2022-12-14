@@ -17,7 +17,7 @@ const Birthday = () => {
   const {birthday} = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [year, month, date] = birthday && birthday.split('-')
+  const [year, month, date] = birthday ? birthday.split('-') : []
 
   const formMethods = useForm({
     mode: 'onChange',
@@ -32,10 +32,9 @@ const Birthday = () => {
   } = formMethods
 
   const onSubmit = data => {
-    console.log(data)
     const birthday = {birthday: `${data.year}-${data.month}-${data.date}`}
     dispatch(addBirthdayAction(birthday))
-    // navigate('/signup/birthday')
+    navigate('/signup/marketing')
   }
 
   const watchedMonth = watch('month')
@@ -44,7 +43,7 @@ const Birthday = () => {
   const moveToBack = () => navigate('/signup')
 
   return (
-    <>
+    <Container>
       <ImageWrapper style={{marginBottom: '20px'}}>
         <Image src={Cake} alt='cake' />
       </ImageWrapper>
@@ -58,7 +57,7 @@ const Birthday = () => {
               {makeYearMonth(1, 12)}
             </Select>
             <Select id='date' initial={date || '일'} {...register('date')}>
-              {makeDate(year || watchedYear || 2022, month || watchedMonth || 12)}
+              {makeDate(year || watchedYear, month || watchedMonth)}
             </Select>
             <Select id='year' initial={year || '년'} {...register('year')}>
               {makeYearMonth(1960, 2021, true)}
@@ -73,9 +72,13 @@ const Birthday = () => {
           </ALink>
         </Form>
       </FormProvider>
-    </>
+    </Container>
   )
 }
+
+const Container = styled.div`
+  padding: 0 16px;
+`
 
 const ImageWrapper = styled.div`
   display: flex;
@@ -102,14 +105,6 @@ const P = styled.p`
 const ALink = styled(P)`
   color: ${({theme}) => theme.colors.blue};
   cursor: pointer;
-`
-
-const AlertMessage = styled.p`
-  color: ${({theme}) => theme.colors.red};
-  font-weight: 600;
-  line-height: 20px;
-  text-align: center;
-  word-break: keep-all;
 `
 
 const Form = styled.form``

@@ -12,6 +12,7 @@ const Login = React.lazy(() => import('./pages/login/Login'))
 const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
 const FirstInfo = React.lazy(() => import('./components/signup/FirstInfo'))
 const Birthday = React.lazy(() => import('./components/signup/Birthday'))
+const MarketingAgree = React.lazy(() => import('./components/signup/MarketingAgree'))
 
 const Page404 = React.lazy(() => import('./pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./pages/page500/Page500'))
@@ -26,6 +27,7 @@ const App = () => {
           <Route exact path='/signup' name='Sign up Page' element={<SignUp />}>
             <Route path='/signup' name='FirstInfo Page' element={<FirstInfo />} />
             <Route path='/signup/birthday' name='Birthday Page' element={<Birthday />} />
+            <Route path='/signup/marketing' name='Marketing Agree Page' element={<MarketingAgree />} />
           </Route>
           <Route exact path='/404' name='Page 404' element={<Page404 />} />
           <Route exact path='/500' name='Page 500' element={<Page500 />} />
