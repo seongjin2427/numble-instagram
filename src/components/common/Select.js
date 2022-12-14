@@ -6,9 +6,11 @@ import React, {forwardRef, useState} from 'react'
 import Icons from './Icons'
 
 const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
-  const {setValue, trigger} = useFormContext()
+  const {setValue, trigger, watch} = useFormContext()
+  const watchedValue = watch(id)
+
   const [toggle, setToggle] = useState(false)
-  const [option, setOption] = useState()
+  const [option, setOption] = useState(watchedValue)
 
   const onToggle = () => setToggle(!toggle)
   const changeValue = v => {
@@ -22,7 +24,7 @@ const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
     <>
       <Backdrop toggle={toggle} onClick={onToggle} />
       <Container width={width}>
-        <input id={id} value={option || initial} ref={ref} {...args} hidden />
+        <input id={id} value={watchedValue || option || initial} ref={ref} {...args} hidden />
         <Button type='button' onClick={onToggle}>
           <P>{option || initial}</P>
           <Icons icon='ChevronDownIcon' size='12px' />
@@ -31,7 +33,7 @@ const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
           {children.map(v => (
             <SelectItem key={v} onClick={() => changeValue(v)}>
               {v}
-              {v === option && <Icons icon='CheckIcon' size='14px' />}
+              {(v === initial || v === option) && <Icons icon='CheckIcon' size='14px' />}
             </SelectItem>
           ))}
         </SelectList>
@@ -79,8 +81,10 @@ const SelectList = styled.ul`
   ${({theme, toggle}) => css`
     display: ${toggle ? 'block' : 'none'};
     width: 100%;
-    max-height: 300px;
+    max-height: 533px;
     position: absolute;
+    top: -250px;
+    left: -2px;
     background: ${theme.colors.white};
     border: 1px solid ${theme.colors['gray-100']};
     border-radius: 8px;

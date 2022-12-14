@@ -5,6 +5,7 @@ const initialState = {
 const SignUpReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'USER_INFO': {
+      console.log('action.data', action.data)
       return {
         signUp: {
           phone: action.data.phone,

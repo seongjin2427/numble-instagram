@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useNavigate} from 'react-router-dom'
 import {FormProvider, useForm} from 'react-hook-form'
@@ -9,13 +9,15 @@ import Select from '../common/Select'
 import Button from '../common/Button'
 import {BIRTHDAY_SCHEMA} from '../../constants/schema'
 import {addBirthdayAction} from '../../store/actions/signup'
-
-import Cake from '../../assets/images/cake.svg'
 import {makeDate, makeYearMonth} from '../../utils/signup'
 
+import Cake from '../../assets/images/cake.svg'
+
 const Birthday = () => {
+  const {birthday} = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [year, month, date] = birthday && birthday.split('-')
 
   const formMethods = useForm({
     mode: 'onChange',
@@ -31,7 +33,8 @@ const Birthday = () => {
 
   const onSubmit = data => {
     console.log(data)
-    dispatch(addBirthdayAction(data))
+    const birthday = {birthday: `${data.year}-${data.month}-${data.date}`}
+    dispatch(addBirthdayAction(birthday))
     // navigate('/signup/birthday')
   }
 
@@ -51,13 +54,13 @@ const Birthday = () => {
       <FormProvider {...formMethods}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <SelectWrapper>
-            <Select id='month' initial='월' {...register('month')}>
+            <Select id='month' initial={month || '월'} {...register('month')}>
               {makeYearMonth(1, 12)}
             </Select>
-            <Select id='date' initial='일' {...register('date')}>
-              {makeDate(watchedYear, watchedMonth) || makeDate(2022, 12)}
+            <Select id='date' initial={date || '일'} {...register('date')}>
+              {makeDate(year || watchedYear || 2022, month || watchedMonth || 12)}
             </Select>
-            <Select id='year' initial='년' {...register('year')}>
+            <Select id='year' initial={year || '년'} {...register('year')}>
               {makeYearMonth(1960, 2021, true)}
             </Select>
           </SelectWrapper>

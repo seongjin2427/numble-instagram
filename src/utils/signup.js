@@ -5,15 +5,13 @@
  * @returns 선택 년도 및 월의 전체 일 배열
  */
 const makeDate = (year, month) => {
-  if (typeof +year !== 'number' || typeof +month !== 'number') return
-
-  const date = new Date(`${year}-${month + 1}-01`) - 1
+  const date = new Date(year, month + 1, 1, 0) - 1
 
   const endDay = new Date(date).getDate()
   const result = []
 
   for (let i = 1; i <= endDay; i++) {
-    result.push(i)
+    result.push(i + '')
   }
 
   return result
@@ -31,11 +29,11 @@ const makeYearMonth = (start, end, reverse) => {
 
   if (reverse) {
     for (let i = end; i >= start; i--) {
-      result.push(i)
+      result.push(i + '')
     }
   } else {
     for (let i = start; i <= end; i++) {
-      result.push(i)
+      result.push(i + '')
     }
   }
 

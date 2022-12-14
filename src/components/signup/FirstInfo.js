@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useNavigate} from 'react-router-dom'
 import {FormProvider, useForm} from 'react-hook-form'
@@ -15,11 +15,14 @@ import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
 
 const FirstInfo = () => {
+  const signup = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const formMethods = useForm({
     mode: 'onChange',
     resolver: yupResolver(SIGN_UP_SCHEMA),
+    defaultValues: signup,
   })
 
   const {

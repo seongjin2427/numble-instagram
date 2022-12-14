@@ -18,7 +18,7 @@ const CommonInput = ({id, icon, placeholder, alert, type, ...args}, ref) => {
       <Icon>
         <Icons size='20px' icon={icon} />
       </Icon>
-      <Input placeholder={placeholder} type={isPassword || type} ref={ref} {...args} />
+      <Input placeholder={placeholder} defaultValue={watchValue} type={isPassword || type} ref={ref} {...args} />
 
       {type !== 'password' ? (
         watchValue &&
