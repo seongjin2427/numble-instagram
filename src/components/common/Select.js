@@ -6,11 +6,10 @@ import React, {forwardRef, useState} from 'react'
 import Icons from './Icons'
 
 const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
-  const {setValue, trigger, watch} = useFormContext()
-  const watchedValue = watch(id)
-
+  const {setValue, watch, trigger} = useFormContext()
   const [toggle, setToggle] = useState(false)
-  const [option, setOption] = useState(watchedValue)
+  const [option, setOption] = useState(initial)
+  const watchedValue = watch(id)
 
   const onToggle = () => setToggle(!toggle)
   const changeValue = v => {
@@ -18,6 +17,7 @@ const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
     setValue(id, v)
     trigger(id)
     onToggle()
+    console.log(watchedValue)
   }
 
   return (
@@ -33,7 +33,7 @@ const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
           {children.map(v => (
             <SelectItem key={v} onClick={() => changeValue(v)}>
               {v}
-              {(v === initial || v === option) && <Icons icon='CheckIcon' size='14px' />}
+              {v === option && <Icons icon='CheckIcon' size='14px' />}
             </SelectItem>
           ))}
         </SelectList>

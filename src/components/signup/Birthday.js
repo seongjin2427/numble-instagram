@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import {useDispatch, useSelector} from 'react-redux'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -37,8 +37,9 @@ const Birthday = () => {
     navigate('/signup/marketing')
   }
 
-  const watchedMonth = watch('month')
   const watchedYear = watch('year')
+  const watchedMonth = watch('month')
+  const watchedDate = watch('date')
 
   const moveToBack = () => navigate('/signup')
 
@@ -56,11 +57,11 @@ const Birthday = () => {
             <Select id='month' initial={month || '월'} {...register('month')}>
               {makeYearMonth(1, 12)}
             </Select>
-            <Select id='date' initial={date || '일'} {...register('date')}>
+            <Select id='date' initial={watchedDate || date || '일'} {...register('date')}>
               {makeDate(year || watchedYear, month || watchedMonth)}
             </Select>
             <Select id='year' initial={year || '년'} {...register('year')}>
-              {makeYearMonth(1960, 2021, true)}
+              {makeYearMonth(1961, 2021, true)}
             </Select>
           </SelectWrapper>
           <P style={{marginBottom: '30px', fontWeight: 500, fontSize: '14px'}}>태어난 날짜를 입력해야합니다.</P>

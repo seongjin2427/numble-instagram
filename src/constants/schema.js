@@ -15,8 +15,9 @@ const SIGN_UP_SCHEMA = yup.object({
 })
 
 const DATE_SCHEMA = yup.number()
+const DATE_YEAR_SCHEMA = yup.number().max(2015)
 
-const BIRTHDAY_SCHEMA = yup.object({date: DATE_SCHEMA, month: DATE_SCHEMA, year: DATE_SCHEMA})
+const BIRTHDAY_SCHEMA = yup.object({date: DATE_SCHEMA, month: DATE_SCHEMA, year: DATE_YEAR_SCHEMA})
 
 const MARKETING_SCHEMA = yup.boolean().oneOf([true])
 
