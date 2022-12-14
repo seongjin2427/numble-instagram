@@ -6,12 +6,12 @@ import {useForm, FormProvider} from 'react-hook-form'
 
 import Button from '../../components/common/Button'
 import CommonInput from '../../components/common/Input'
+import {LOGIN_INPUTS} from '../../constants/login'
 import {LOGIN_SCHEMA} from '../../constants/schema'
+import {KAKAO_URL, userLoginApi} from '../../api/login'
 
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
-import {LOGIN_INPUTS} from '../../constants/login'
-import {KAKAO_URL, userLoginApi} from '../../api/login'
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')

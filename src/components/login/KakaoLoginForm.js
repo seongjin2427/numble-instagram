@@ -1,17 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {useLocation, useNavigate} from 'react-router'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm, FormProvider} from 'react-hook-form'
+import {useLocation, useNavigate} from 'react-router'
+import React, {useCallback, useEffect, useState} from 'react'
 
 import Button from '../../components/common/Button'
 import CommonInput from '../../components/common/Input'
+import {LOGIN_INPUTS} from '../../constants/login'
 import {LOGIN_SCHEMA} from '../../constants/schema'
+import {kakaoLoginApi, KAKAO_URL, userLoginApi} from '../../api/login'
 
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
-import {LOGIN_INPUTS} from '../../constants/login'
-import {kakaoLoginApi, KAKAO_URL, userLoginApi} from '../../api/login'
 
 const KakaoLoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
