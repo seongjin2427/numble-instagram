@@ -3,26 +3,33 @@ const HEADER_MENU_LIST = [
     icon: 'HomeIcon',
     url: '/',
     black: true,
+    clickHandler(fn) {
+      console.log('/')
+    },
   },
   {
     icon: 'SendIcon',
     url: '/',
     black: false,
+    clickHandler(fn) {
+      console.log('/')
+    },
   },
   {
     icon: 'AddIcon',
     url: '/',
     black: false,
+    clickHandler(fn) {
+      console.log('/')
+    },
   },
   {
     icon: 'HeartIcon',
     url: '/',
     black: false,
-  },
-  {
-    icon: 'UserIcon',
-    url: '/',
-    black: false,
+    clickHandler(fn) {
+      console.log('/')
+    },
   },
 ]
 
@@ -31,7 +38,7 @@ const HEADER_MODAL_LIST = [
     icon: 'UserIcon',
     url: '/',
     title: '프로필',
-    onClick(fn) {
+    clickHandler(fn) {
       console.log('/')
     },
   },
@@ -39,7 +46,7 @@ const HEADER_MODAL_LIST = [
     icon: 'BookmarkIcon',
     url: '/',
     title: '저장됨',
-    onClick(fn) {
+    clickHandler(fn) {
       console.log('/')
     },
   },
@@ -47,7 +54,7 @@ const HEADER_MODAL_LIST = [
     icon: 'SettingsIcon',
     url: '/',
     title: '설정',
-    onClick(fn) {
+    clickHandler(fn) {
       console.log('/')
     },
   },
@@ -55,7 +62,7 @@ const HEADER_MODAL_LIST = [
     icon: 'AlertCircleIcon',
     url: '/',
     title: '문제 신고',
-    onClick(fn) {
+    clickHandler(fn) {
       console.log('/')
     },
   },
@@ -63,7 +70,7 @@ const HEADER_MODAL_LIST = [
     icon: 'SettingsIcon',
     url: '/',
     title: '로그아웃',
-    onClick(fn) {
+    clickHandler(fn) {
       console.log('/')
     },
   },

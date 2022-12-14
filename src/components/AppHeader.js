@@ -15,6 +15,8 @@ const AppHeader = () => {
   // const sidebarShow = useSelector((state) => state.sidebarShow)
   // const [visible, setVisible] = useState(false)
 
+  const toggleModal = () => onToggle(!toggle)
+
   return (
     <Header>
       <HeaderWrapper>
@@ -32,7 +34,10 @@ const AppHeader = () => {
             </MenuItem>
           ))}
           <MenuItem>
-            <ProfileWrapper onClick={() => onToggle(!toggle)}>
+            <Icons icon='UserIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <ProfileWrapper onClick={toggleModal}>
               <Image src={Profile} alt='profile' />
             </ProfileWrapper>
             <ModalWrapper toggle={toggle}>
