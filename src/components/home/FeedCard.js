@@ -1,9 +1,24 @@
 import React from 'react'
 
 import styled, {css} from 'styled-components'
+import Carousel from './Carousel'
+
+import NewYork from '../../assets/images/newyork.svg'
+
+const imgArr = new Array(30).fill(NewYork)
 
 const FeedCard = () => {
-  return <Container>FeedCard</Container>
+  return (
+    <Container>
+      <Carousel>
+        {imgArr.map((img, idx) => (
+          <div key={idx}>
+            <img src={img} alt={'img'} />
+          </div>
+        ))}
+      </Carousel>
+    </Container>
+  )
 }
 
 const Container = styled.div`
