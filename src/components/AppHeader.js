@@ -6,8 +6,11 @@ import {MEDEA_QUERY} from '../style/media-query'
 
 import Profile from '../assets/images/sample_profile.svg'
 import Logo from '../assets/images/logo.svg'
+import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
+import useToggle from '../hooks/useToggle'
 
 const AppHeader = () => {
+  const [toggle, onToggle] = useToggle()
   // const dispatch = useDispatch()
   // const sidebarShow = useSelector((state) => state.sidebarShow)
   // const [visible, setVisible] = useState(false)
@@ -23,25 +26,23 @@ const AppHeader = () => {
           <Input />
         </InputWrapper>
         <MenuList>
-          <MenuItem black>
-            <Icons icon='HomeIcon' size='20px' />
-          </MenuItem>
+          {HEADER_MENU_LIST.map(({icon, black, url}) => (
+            <MenuItem key={icon} black={black}>
+              <Icons icon={icon} size='20px' />
+            </MenuItem>
+          ))}
           <MenuItem>
-            <Icons icon='SendIcon' size='20px' />
-          </MenuItem>
-          <MenuItem>
-            <Icons icon='AddIcon' size='20px' />
-          </MenuItem>
-          <MenuItem>
-            <Icons icon='HeartIcon' size='20px' />
-          </MenuItem>
-          <MenuItem>
-            <Icons icon='UserIcon' size='20px' />
-          </MenuItem>
-          <MenuItem>
-            <ProfileWrapper>
+            <ProfileWrapper onClick={() => onToggle(!toggle)}>
               <Image src={Profile} alt='profile' />
             </ProfileWrapper>
+            <ModalWrapper toggle={toggle}>
+              {HEADER_MODAL_LIST.map(({icon, title, url}) => (
+                <ModalItem key={icon}>
+                  <Icons icon={icon} size='20px' />
+                  {title}
+                </ModalItem>
+              ))}
+            </ModalWrapper>
           </MenuItem>
         </MenuList>
       </HeaderWrapper>
@@ -135,6 +136,7 @@ const MenuList = styled.ul`
 const MenuItem = styled.li`
   display: flex;
   align-items: center;
+  position: relative;
   cursor: pointer;
 
   svg {
@@ -166,6 +168,44 @@ const ProfileWrapper = styled.div`
   height: 45px;
   border-radius: 50%;
   overflow: hidden;
+`
+
+const ModalWrapper = styled.ul`
+  ${({theme, toggle}) => css`
+    display: ${toggle ? 'flex' : 'none'};
+    flex-direction: column;
+    align-items: flex-start;
+    width: 280px;
+    height: 312px;
+    padding: 15px 35px;
+
+    position: absolute;
+    top: 57px;
+    right: -10px;
+
+    background: ${theme.colors.white};
+    border: 1px solid ${theme.colors['gray-200']};
+    border-radius: 8px;
+    box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+    cursor: default;
+  `}
+`
+
+const ModalItem = styled.li`
+  ${({theme}) => css`
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 17px 0;
+
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+
+    svg {
+      stroke: ${theme.colors['gray-900']};
+    }
+  `}
 `
 
 export default AppHeader
