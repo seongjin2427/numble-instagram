@@ -21,6 +21,10 @@ const Image = styled.img``
 const P = styled.p`
   color: ${({theme}) => theme.colors['gray-500']};
   text-align: center;
+
+  em {
+    cursor: pointer;
+  }
 `
 
 const AlertMessage = styled.p`

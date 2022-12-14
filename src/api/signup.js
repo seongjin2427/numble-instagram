@@ -1,6 +1,20 @@
 import dayjs from 'dayjs'
 import ApiConfig from '../dataManager/apiConfig'
 
+const checkDuplicateLoginIdApi = async loginId => {
+  try {
+    const {data} = await ApiConfig.request({
+      method: 'get',
+      url: `${process.env.REACT_APP_API}/app/check-duplicate-login-id`,
+      query: {loginId},
+    })
+    console.log(data)
+    return data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const userSignupApi = async data => {
   const {phoneNumber, loginId, password, realName, year, month, date} = data
   const birthDate = dayjs(`${year}${month}${date}`).format('YYYY.MM.DD')
@@ -15,7 +29,7 @@ const userSignupApi = async data => {
     }
 
     const {data} = await ApiConfig.request({
-      url: 'https://api.gridge-test.com/app/sign-up',
+      url: `${process.env.REACT_APP_API}/app/sign-up`,
       data: userInfo,
       method: 'post',
     })
@@ -27,4 +41,4 @@ const userSignupApi = async data => {
   }
 }
 
-export {userSignupApi}
+export {checkDuplicateLoginIdApi, userSignupApi}

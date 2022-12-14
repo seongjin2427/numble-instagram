@@ -1,11 +1,15 @@
 import React from 'react'
-import {Outlet} from 'react-router-dom'
+import {Outlet, useNavigate} from 'react-router-dom'
 
 import GoogleButton from '../../assets/images/google-play-btn.svg'
 import AppStoreButton from '../../assets/images/app-store-btn.svg'
 import * as S from './SignUp.styled'
 
 const SignUp = () => {
+  const navigate = useNavigate()
+
+  const moveToUrl = url => navigate(url)
+
   return (
     <S.Container>
       <S.SignUpArea>
@@ -13,7 +17,7 @@ const SignUp = () => {
       </S.SignUpArea>
       <S.LoginArea>
         <S.P style={{fontWeight: 600}}>
-          계정이 있으신가요? <em>로그인</em>
+          계정이 있으신가요? <em onClick={() => moveToUrl('/login')}>로그인</em>
         </S.P>
       </S.LoginArea>
       <S.DownloadApp>

@@ -13,6 +13,7 @@ import {firstUserInfoAction} from '../../store/actions/signup'
 
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
+import {checkDuplicateLoginIdApi} from '../../api/signup'
 
 const FirstInfo = () => {
   const signup = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
@@ -28,12 +29,21 @@ const FirstInfo = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: {isValid, errors},
   } = formMethods
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     dispatch(firstUserInfoAction(data))
-    navigate('/signup/birthday')
+
+    const {isSuccess, message} = await checkDuplicateLoginIdApi(data.loginId)
+
+    if (isSuccess) {
+      navigate('/signup/birthday')
+      return
+    }
+
+    setError('loginId', {message})
   }
 
   return (
@@ -68,7 +78,7 @@ const FirstInfo = () => {
             가입
           </Button>
           <AlertMessage>
-            {errors && (errors?.phone?.message || errors?.name?.message || errors?.userId?.message)}
+            {errors?.phoneNumber?.message || errors?.realName?.message || errors?.loginId?.message}
           </AlertMessage>
         </Form>
       </FormProvider>
