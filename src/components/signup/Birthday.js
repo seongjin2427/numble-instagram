@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {useDispatch, useSelector} from 'react-redux'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -7,21 +7,20 @@ import {FormProvider, useForm} from 'react-hook-form'
 
 import Select from '../common/Select'
 import Button from '../common/Button'
-import {BIRTHDAY_SCHEMA} from '../../constants/schema'
+import {BIRTHDATE_SCHEMA} from '../../constants/schema'
 import {addBirthdayAction} from '../../store/actions/signup'
 import {makeDate, makeYearMonth} from '../../utils/signup'
 
 import Cake from '../../assets/images/cake.svg'
 
 const Birthday = () => {
-  const {birthday} = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
+  const {year, month, date} = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [year, month, date] = birthday ? birthday.split('-') : []
 
   const formMethods = useForm({
     mode: 'onChange',
-    resolver: yupResolver(BIRTHDAY_SCHEMA),
+    resolver: yupResolver(BIRTHDATE_SCHEMA),
   })
 
   const {
@@ -32,8 +31,7 @@ const Birthday = () => {
   } = formMethods
 
   const onSubmit = data => {
-    const birthday = {birthday: `${data.year}-${data.month}-${data.date}`}
-    dispatch(addBirthdayAction(birthday))
+    dispatch(addBirthdayAction(data))
     navigate('/signup/marketing')
   }
 

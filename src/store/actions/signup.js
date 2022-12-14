@@ -12,11 +12,4 @@ const addBirthdayAction = data => {
   }
 }
 
-const marketingAgreeAction = data => {
-  return {
-    type: 'MARKETING_AGREE',
-    data,
-  }
-}
-
-export {firstUserInfoAction, addBirthdayAction, marketingAgreeAction}
+export {firstUserInfoAction, addBirthdayAction}

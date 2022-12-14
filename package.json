@@ -19,6 +19,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "axios": "^0.26.1",
+    "dayjs": "^1.11.7",
     "dotenv-cli": "^5.1.0",
     "react": "^17.0.2",
     "react-app-polyfill": "^3.0.0",

@@ -8,9 +8,9 @@ const SignUpReducer = (state = initialState, action) => {
       console.log('action.data', action.data)
       return {
         signUp: {
-          phone: action.data.phone,
-          name: action.data.name,
-          userId: action.data.userId,
+          phoneNumber: action.data.phoneNumber,
+          realName: action.data.realName,
+          loginId: action.data.loginId,
           password: action.data.password,
           ...state.signUp,
         },
@@ -20,15 +20,9 @@ const SignUpReducer = (state = initialState, action) => {
       return {
         signUp: {
           ...state.signUp,
-          birthday: action.data.birthday,
-        },
-      }
-    }
-    case 'MARKETING_AGREE': {
-      return {
-        signUp: {
-          marketingAgreed: action.data.marketingAgreed,
-          ...state.signUp,
+          year: action.data.year,
+          month: action.data.month,
+          date: action.data.date,
         },
       }
     }

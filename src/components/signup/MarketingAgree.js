@@ -1,19 +1,20 @@
 import styled from 'styled-components'
-import {useDispatch} from 'react-redux'
-import {yupResolver} from '@hookform/resolvers/yup'
+import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import React, {forwardRef, useCallback, useEffect, useMemo, useState} from 'react'
+import {yupResolver} from '@hookform/resolvers/yup'
 import {FormProvider, useForm, useFormContext} from 'react-hook-form'
+import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 
 import Icons from '../common/Icons'
 import Button from '../common/Button'
 import Typography from '../common/Typography'
-import {marketingAgreeAction} from '../../store/actions/signup'
+import {userSignupApi} from '../../api/signup'
 import {MARKETING_AGREED_SCHEMA} from '../../constants/schema'
 
 const MarketingAgree = () => {
+  const userInfo = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const [agreed, setAgreed] = useState(false)
-  const dispatch = useDispatch()
+  const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
 
   const formMethods = useForm({
@@ -30,9 +31,16 @@ const MarketingAgree = () => {
     formState: {isValid},
   } = formMethods
 
-  const onSubmit = () => {
-    dispatch(marketingAgreeAction({marketingAgreed: agreed}))
-    navigate('/login')
+  const onSubmit = async () => {
+    if (agreed) {
+      const {isSuccess, message} = await userSignupApi(userInfo)
+
+      if (isSuccess) {
+        navigate('/login')
+      } else {
+        setErrorMessage(message)
+      }
+    }
   }
 
   const getAllValues = useCallback(() => {
@@ -99,6 +107,7 @@ const MarketingAgree = () => {
         <ALink onClick={moveToBack} style={{marginBottom: '20px', fontWeight: 600}}>
           돌아가기
         </ALink>
+        {errorMessage && <AlertMessage>{errorMessage}</AlertMessage>}
       </FormProvider>
     </Container>
   )
@@ -197,6 +206,14 @@ const Content = styled.div`
   flex-direction: column;
   gap: 5px;
   font-weight: 500;
+`
+
+const AlertMessage = styled.p`
+  color: ${({theme}) => theme.colors.red};
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  word-break: keep-all;
 `
 
 export default MarketingAgree

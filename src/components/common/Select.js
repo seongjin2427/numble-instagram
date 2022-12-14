@@ -17,7 +17,6 @@ const Select = ({children, id, initial, width = '100px', ...args}, ref) => {
     setValue(id, v)
     trigger(id)
     onToggle()
-    console.log(watchedValue)
   }
 
   return (

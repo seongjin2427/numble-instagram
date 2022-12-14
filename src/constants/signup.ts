@@ -1,18 +1,18 @@
 const SIGN_UP_INPUTS = [
   {
-    id: 'phone',
+    id: 'phoneNumber',
     type: 'text',
     icon: 'MailIcon',
     placeholder: '전화번호,사용자 이름 또는 이메일',
   },
   {
-    id: 'name',
+    id: 'realName',
     type: 'text',
     icon: 'UserIcon',
     placeholder: '성명',
   },
   {
-    id: 'userId',
+    id: 'loginId',
     type: 'text',
     icon: 'SettingsIcon',
     placeholder: '사용자 이름',
