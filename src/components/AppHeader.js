@@ -28,8 +28,8 @@ const AppHeader = () => {
           <Input />
         </InputWrapper>
         <MenuList>
-          {HEADER_MENU_LIST.map(({icon, black, url}) => (
-            <MenuItem key={icon} black={black}>
+          {HEADER_MENU_LIST.map(({icon, black, url}, idx) => (
+            <MenuItem key={idx} black={black}>
               <Icons icon={icon} size='20px' />
             </MenuItem>
           ))}
@@ -41,8 +41,8 @@ const AppHeader = () => {
               <Image src={Profile} alt='profile' />
             </ProfileWrapper>
             <ModalWrapper toggle={toggle}>
-              {HEADER_MODAL_LIST.map(({icon, title, url}) => (
-                <ModalItem key={icon}>
+              {HEADER_MODAL_LIST.map(({icon, title, url}, idx) => (
+                <ModalItem key={idx}>
                   <Icons icon={icon} size='20px' />
                   {title}
                 </ModalItem>
@@ -125,6 +125,7 @@ const MenuList = styled.ul`
   position: fixed;
   bottom: 0;
   left: 0;
+  background: ${({theme}) => theme.colors.white};
   box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
 
   ${MEDEA_QUERY.WIDE_DESKTOP} {
@@ -134,6 +135,7 @@ const MenuList = styled.ul`
     padding: 0;
     position: unset;
     border: none;
+    background: none;
     box-shadow: none;
   }
 `

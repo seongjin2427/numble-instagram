@@ -34,7 +34,7 @@ const Root = styled.div`
   flex-direction: column;
   width: 100vw;
   max-width: 1440px;
-  height: 100vh;
+  padding-bottom: 100px;
   background: ${({theme}) => theme.colors['gray-50']};
 
   @media all and (max-width: ${supportDeviceSize}px) {

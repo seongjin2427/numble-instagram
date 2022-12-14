@@ -39,6 +39,10 @@ const Carousel = ({settings = DEFAULT_SETTINGS, children}) => {
 
 const SlickWrapper = styled.div`
   ${({theme}) => css`
+    .slick-dots {
+      bottom: -30px;
+    }
+
     .slick-dots li {
       margin: 0;
     }

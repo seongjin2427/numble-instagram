@@ -1,9 +1,37 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import theme from '../../style/theme'
 
-// eslint-disable-next-line react/prop-types
-const Typography = ({as: Component = 'span', children, fontWeight, fontSize, color, textAlign, cursor}) => {
-  return <Component style={{fontSize, fontWeight, textAlign, cursor, color: theme.colors[color]}}>{children}</Component>
+const Typography = ({
+  as: Component = 'span',
+  children,
+  display,
+  fontWeight,
+  fontSize,
+  lineHeight,
+  color,
+  textAlign,
+  margin,
+  wordBreak,
+  cursor,
+}) => {
+  return (
+    <Component
+      style={{
+        display,
+        lineHeight,
+        fontSize,
+        fontWeight,
+        textAlign,
+        cursor,
+        margin,
+        wordBreak,
+        color: theme.colors[color],
+      }}
+    >
+      {children}
+    </Component>
+  )
 }
 
 export default Typography
