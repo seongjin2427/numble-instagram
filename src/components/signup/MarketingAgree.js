@@ -123,6 +123,7 @@ const Checkbox = forwardRef(({children, id, href, ...props}, ref) => {
     setValue(id, !watchedValue)
     trigger(id)
   }
+
   const moveToHref = () => navigate(href)
 
   return (
