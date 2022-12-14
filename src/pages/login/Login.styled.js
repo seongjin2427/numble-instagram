@@ -3,6 +3,10 @@ import styled, {css} from 'styled-components'
 const Container = styled.div``
 
 const LoginFormArea = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
   width: 416px;
   padding: 50px 30px 25px 30px;
   margin-bottom: 10px;
@@ -22,6 +26,7 @@ const P = styled.p`
   color: ${({theme}) => theme.colors['gray-500']};
   text-align: center;
 
+  text-decoration: none;
   em {
     cursor: pointer;
   }

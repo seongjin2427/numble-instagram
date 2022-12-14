@@ -25,7 +25,7 @@ const KakaoLoginForm = () => {
         const {loginId, jwt} = result
         localStorage.setItem('jwt', jwt)
         localStorage.setItem('loginId', loginId)
-        navigate('/list')
+        navigate('/')
       }
     },
     [navigate],

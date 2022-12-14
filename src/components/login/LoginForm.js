@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router'
 import {yupResolver} from '@hookform/resolvers/yup'
+import React, {useState} from 'react'
 import {useForm, FormProvider} from 'react-hook-form'
 
 import Button from '../../components/common/Button'
@@ -35,7 +35,7 @@ const LoginForm = () => {
       const {jwt, loginId} = result
       localStorage.setItem('jwt', jwt)
       localStorage.setItem('loginId', loginId)
-      navigate('/list')
+      navigate('/')
       return
     }
 

@@ -4,8 +4,10 @@ import AppContent from '../components/AppContent'
 import AppFooter from '../components/AppFooter'
 import styled from 'styled-components'
 import {supportDeviceSize} from '../style/styled'
+import {Outlet} from 'react-router'
 
-const DefaultLayout = () => {
+// eslint-disable-next-line react/prop-types
+const DefaultLayout = ({children}) => {
   /*const navigate = useNavigate()
 
   // Redux 값 불러오기
@@ -22,9 +24,9 @@ const DefaultLayout = () => {
 
   return (
     <Root>
-      {/* <AppHeader /> */}
-      <AppContent />
-      {/* <AppFooter /> */}
+      <AppHeader />
+      <Outlet />
+      <AppFooter />
     </Root>
   )
 }
@@ -32,9 +34,8 @@ const DefaultLayout = () => {
 const Root = styled.div`
   display: flex;
   flex-direction: column;
-  width: 446px;
-  padding: 0 15px;
-  background-color: lightpink;
+  width: 100vw;
+  max-width: 1440px;
 
   @media all and (max-width: ${supportDeviceSize}px) {
     width: 100vw;

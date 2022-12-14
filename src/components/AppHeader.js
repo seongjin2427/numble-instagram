@@ -1,98 +1,171 @@
 import React from 'react'
-import styled from 'styled-components'
-import {Link, useNavigate} from 'react-router-dom'
-import packageJson from '../../package.json'
+import styled, {css} from 'styled-components'
+
+import Icons from './common/Icons'
+import {MEDEA_QUERY} from '../style/media-query'
+
+import Profile from '../assets/images/sample_profile.svg'
+import Logo from '../assets/images/logo.svg'
 
 const AppHeader = () => {
-  const navigate = useNavigate()
-
   // const dispatch = useDispatch()
   // const sidebarShow = useSelector((state) => state.sidebarShow)
   // const [visible, setVisible] = useState(false)
 
   return (
     <Header>
-      <Wrap>
-        <HeaderText>
-          {process.env.REACT_APP_ENV !== 'production' ? (
-            <>
-              REACT_APP_ENV : ${process.env.REACT_APP_ENV}
-              <br />
-              REACT_APP_API : ${process.env.REACT_APP_API}
-              <br />
-              프로젝트 : ${packageJson.name}
-              <br />
-              설명 : ${packageJson.description}
-              <br />
-              버전 : ${packageJson.version}
-            </>
-          ) : (
-            ''
-          )}
-        </HeaderText>
-      </Wrap>
-      <Wrap>
-        <Link to='/login'>
-          <Button>로그아웃</Button>
-        </Link>
-        <Button
-          onClick={() => {
-            // replace true 는 뒤로가기시 이전 페이지로 안가짐
-            navigate('/', {replace: true})
-          }}
-        >
-          대시보드로 화면 전환
-        </Button>
-        <Button
-          onClick={() => {
-            // replace false (혹은 생략) 는 뒤로가기시 이전 페이지 가짐
-            navigate('/')
-          }}
-        >
-          홈
-        </Button>
-      </Wrap>
+      <HeaderWrapper>
+        <ImageWrapper>
+          <Image src={Logo} alt='logo' />
+        </ImageWrapper>
+        <InputWrapper>
+          <Icons icon='SearchIcon' size='16px' />
+          <Input />
+        </InputWrapper>
+        <MenuList>
+          <MenuItem black>
+            <Icons icon='HomeIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <Icons icon='SendIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <Icons icon='AddIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <Icons icon='HeartIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <Icons icon='UserIcon' size='20px' />
+          </MenuItem>
+          <MenuItem>
+            <ProfileWrapper>
+              <Image src={Profile} alt='profile' />
+            </ProfileWrapper>
+          </MenuItem>
+        </MenuList>
+      </HeaderWrapper>
     </Header>
   )
 }
 
 const Header = styled.div`
-  width: 100%;
-  height: 11rem;
-  background-color: red;
+  ${({theme}) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 80px;
+    background: ${theme.colors.white};
+    border-bottom: 1px solid ${theme.colors['gray-200']};
+  `}
+`
+
+const HeaderWrapper = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.06);
+  width: 1076px;
+  padding: 0 30px;
 `
 
-const Wrap = styled.div`
+const ImageWrapper = styled.div`
+  width: 140px;
+  height: 50px;
+`
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
+const InputWrapper = styled.div`
+  ${({theme}) => css`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 312px;
+    height: 44px;
+    padding: 10px 14px;
+    border: 1px solid ${theme.colors['gray-300']};
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+
+    svg {
+      stroke: ${theme.colors['gray-500']};
+      margin-bottom: 2px;
+    }
+  `}
+`
+
+const Input = styled.input`
+  height: 24px;
+  flex: 1;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+`
+
+const MenuList = styled.ul`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  gap: 25px;
+  width: 100%;
+  height: 60px;
+  padding-top: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
+
+  ${MEDEA_QUERY.WIDE_DESKTOP} {
+    width: auto;
+    align-items: center;
+    justify-content: normal;
+    padding: 0;
+    position: unset;
+    border: none;
+    box-shadow: none;
+  }
+`
+
+const MenuItem = styled.li`
   display: flex;
   align-items: center;
-  background-color: green;
-  margin-left: 5rem;
-  margin-right: 5rem;
-`
-
-const HeaderText = styled.p`
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-`
-
-const Button = styled.div`
-  padding: 1rem;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-  border-radius: 0.6rem;
-  background-color: blue;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  text-align: center;
   cursor: pointer;
+
+  svg {
+    stroke: ${({theme, black}) => theme.colors[black ? 'gray-900' : 'gray-500']};
+    margin-bottom: 2px;
+  }
+
+  :nth-last-of-type(2) {
+    display: flex;
+  }
+
+  :last-of-type {
+    display: none;
+  }
+
+  ${MEDEA_QUERY.WIDE_DESKTOP} {
+    :last-of-type {
+      display: flex;
+    }
+
+    :nth-last-of-type(2) {
+      display: none;
+    }
+  }
+`
+
+const ProfileWrapper = styled.div`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
 `
 
 export default AppHeader

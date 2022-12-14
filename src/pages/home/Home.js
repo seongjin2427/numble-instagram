@@ -6,24 +6,14 @@ const HomePage = () => {
   // Redux 값 불러오기
   const {user} = useSelector(state => state.LoginReducer)
 
-  return (
-    <Home>
-      <Wrap>
-        <h4 style={{color: 'white'}}>항상 {user.name}님을 응원합니다 !</h4>
-      </Wrap>
-      <hr />
-      <Wrap>
-        <h4 style={{color: 'white'}}>실제 개발 할 때는 인라인 스타일 보다는 styled-components 를 사용해주세요.</h4>
-      </Wrap>
-    </Home>
-  )
+  return <Home></Home>
 }
 
 const Home = styled.div`
   width: 100%
   display: flex;
   flex-direction: column;
-  background-color: blue;
+  /* background-color: blue; */
   padding: 1rem;
 `
 
