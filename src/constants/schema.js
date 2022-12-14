@@ -36,7 +36,7 @@ const MARKETING_AGREED_SCHEMA = yup.object({
   location: MARKETING_SCHEMA,
 })
 
-const LOGIN_ID_SCHEMA = yup.string().min(3).max(20).required()
+const LOGIN_ID_SCHEMA = yup.string().min(1).max(20).required()
 
 const LOGIN_PASSWORD_SCHEMA = yup.string().min(6).max(20).required()
 

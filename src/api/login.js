@@ -1,7 +1,7 @@
+import axios from 'axios'
 import ApiConfig from '../dataManager/apiConfig'
 
 const userLoginApi = async userInfo => {
-  console.log(userInfo)
   try {
     const result = await ApiConfig.request({
       method: 'post',
@@ -9,11 +9,27 @@ const userLoginApi = async userInfo => {
       data: userInfo,
     })
 
-    console.log(result)
     return result.data
   } catch (err) {
     console.log(err)
   }
 }
 
-export {userLoginApi}
+const KAKAO_URL = `${process.env.REACT_APP_KAKAO_REQUEST_URI}/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}`
+
+const kakaoLoginApi = async code => {
+  try {
+    const {data} = await axios.post(
+      `${process.env.REACT_APP_KAKAO_REQUEST_URI}/oauth/token?grant_type=authorization_code&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&code=${code}`,
+    )
+    const {access_token} = data
+
+    const result = await axios.post(`${process.env.REACT_APP_API}/app/kakao-sign-in`, {accessToken: access_token})
+
+    return result.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export {userLoginApi, KAKAO_URL, kakaoLoginApi}

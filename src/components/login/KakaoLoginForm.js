@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {useNavigate} from 'react-router'
+import {useLocation, useNavigate} from 'react-router'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useForm, FormProvider} from 'react-hook-form'
 
@@ -11,11 +11,31 @@ import {LOGIN_SCHEMA} from '../../constants/schema'
 import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
 import {LOGIN_INPUTS} from '../../constants/login'
-import {KAKAO_URL, userLoginApi} from '../../api/login'
+import {kakaoLoginApi, KAKAO_URL, userLoginApi} from '../../api/login'
 
-const LoginForm = () => {
+const KakaoLoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
+  const location = useLocation()
   const navigate = useNavigate()
+
+  const getToken = useCallback(
+    async code => {
+      const {isSuccess, result} = await kakaoLoginApi(code)
+      if (isSuccess) {
+        const {loginId, jwt} = result
+        localStorage.setItem('jwt', jwt)
+        localStorage.setItem('loginId', loginId)
+        navigate('/list')
+      }
+    },
+    [navigate],
+  )
+
+  useEffect(() => {
+    const a = location.search.split('=')[1]
+    getToken(a)
+    console.log(a)
+  }, [getToken, location])
 
   const formMethods = useForm({
     mode: 'onChange',
@@ -33,9 +53,9 @@ const LoginForm = () => {
 
     if (isSuccess) {
       const {jwt, loginId} = result
-      localStorage.setItem('jwt', jwt)
+      localStorage.setItem('access_token', jwt)
       localStorage.setItem('loginId', loginId)
-      navigate('/list')
+      // navigate('/')
       return
     }
 
@@ -64,7 +84,7 @@ const LoginForm = () => {
                 icon={icon}
                 maxLength={20}
                 nextFocus={nextFocus}
-                // showCheckCircle={false}
+                showCheckCircle={false}
                 placeholder={placeholder}
                 {...register(id)}
               />
@@ -122,4 +142,4 @@ const InputWrapper = styled.div`
   margin-bottom: 20px;
 `
 
-export default LoginForm
+export default KakaoLoginForm
