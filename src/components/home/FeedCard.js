@@ -8,8 +8,9 @@ import Typography from '../common/Typography'
 
 import NewYork from '../../assets/images/newyork.svg'
 import ProfileImage from '../../assets/images/sample_profile.svg'
+import ReplyCard from './ReplyCard'
 
-const imgArr = new Array(30).fill(NewYork)
+const imgArr = new Array(2).fill(NewYork)
 
 const sample = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
 industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
@@ -23,13 +24,26 @@ const FeedCard = () => {
 
   return (
     <Container>
-      <Carousel>
-        {imgArr.map((img, idx) => (
-          <div key={idx}>
-            <img src={img} alt={'img'} />
-          </div>
-        ))}
-      </Carousel>
+      <FeedPhotoWrapper>
+        <Carousel>
+          {imgArr.map((img, idx) => (
+            <div key={idx}>
+              <img src={img} alt={'img'} />
+            </div>
+          ))}
+        </Carousel>
+        <ProfileWrapper>
+          <ProfileImageWrapper size='30px'>
+            <Profile src={ProfileImage} alt='profile' />
+          </ProfileImageWrapper>
+          <Typography as='p' fontWeight={600} color='white'>
+            happypuppy
+          </Typography>
+        </ProfileWrapper>
+        <MoreWrapper>
+          <Icons icon='MoreCircleIcon' size='30px' />
+        </MoreWrapper>
+      </FeedPhotoWrapper>
       <FeedContentWrapper>
         <IconWrapper>
           <IconBox>
@@ -59,10 +73,16 @@ const FeedCard = () => {
             2시간 전
           </Typography>
         </FeedContent>
+        <ReplyCard
+          author='happypuppy'
+          content='뉴욕 정말 멋있죠 ㅠㅠ'
+          created_at={new Date('2022-11-15 17:42:16')}
+          profile_uri={ProfileImage}
+        />
         <ReplyWrapper>
-          <ProfileWrapper>
+          <ReaplyProfileWrapper size='30px'>
             <Profile src={ProfileImage} alt='profile' />
-          </ProfileWrapper>
+          </ReaplyProfileWrapper>
           <Input type='text' placeholder='댓글 달기...' />
           <ReplyButton>게시</ReplyButton>
         </ReplyWrapper>
@@ -78,6 +98,34 @@ const Container = styled.div`
     border: 1px solid ${theme.colors['gray-200']};
     border-radius: 10px;
   `}
+`
+
+const FeedPhotoWrapper = styled.div`
+  position: relative;
+`
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  top: 20px;
+  left: 15px;
+`
+
+const ProfileImageWrapper = styled.div`
+  ${({size}) => css`
+    width: ${size};
+    height: ${size};
+    border-radius: 50%;
+    overflow: hidden;
+  `}
+`
+
+const MoreWrapper = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 15px;
 `
 
 const FeedContentWrapper = styled.div``
@@ -141,11 +189,8 @@ const ReplyWrapper = styled.div`
   border-top: 0.5px solid ${({theme}) => theme.colors['gray-300']};
 `
 
-const ProfileWrapper = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
+const ReaplyProfileWrapper = styled(ProfileImageWrapper)`
+  position: unset;
 `
 
 const Profile = styled.img`
