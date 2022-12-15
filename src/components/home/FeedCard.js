@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import styled, {css} from 'styled-components'
 
@@ -6,30 +7,32 @@ import Icons from '../common/Icons'
 import useToggle from '../../hooks/useToggle'
 import Typography from '../common/Typography'
 
-import NewYork from '../../assets/images/newyork.svg'
 import ProfileImage from '../../assets/images/sample_profile.svg'
 import ReplyCard from './ReplyCard'
+import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
-const imgArr = new Array(2).fill(NewYork)
+const feed = {
+  feedCommentCount: 0,
+  feedCreatedAt: '',
+  feedId: 1,
+  feedLoginId: 'sss',
+  feedText: 'sss',
+  feedUpdatedAt: '',
+  contentsList: [{contentsId: 1, contentsUrl: 'aa', createdAt: 'aa', updatedAt: 'aa'}],
+}
 
-const sample = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
-of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-like Aldus PageMaker including versions of Lorem Ipsum.`
-
-const FeedCard = () => {
+const FeedCard = ({feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt}) => {
   const [toggle, onToggle] = useToggle()
+  const overLength = feedText.length >= 100
 
   return (
     <Container>
       <FeedPhotoWrapper>
         <Carousel>
-          {imgArr.map((img, idx) => (
-            <div key={idx}>
-              <img src={img} alt={'img'} />
-            </div>
+          {contentsList.map(({contentsUrl}, idx) => (
+            <FeedPhotoBox key={idx}>
+              <FeedPhotoImage src={contentsUrl} alt={'img'} />
+            </FeedPhotoBox>
           ))}
         </Carousel>
         <ProfileWrapper>
@@ -56,29 +59,33 @@ const FeedCard = () => {
           <Typography as='p' margin='0 0 10px 0' fontWeight={700}>
             좋아요 271개
           </Typography>
-          <Content toggle={toggle}>
+          <Content toggle={toggle} overLength={overLength}>
             <Typography as='span' display='inline-block' margin='0 5px 7px 0' fontWeight={700}>
-              happypuppy
+              {feedLoginId}
             </Typography>
-            <Typography as='span' wordBreak='break-word' lineHeight='180%' margin='0 0 10px 0'>
-              {!toggle && sample.length >= 100 && sample.split(' ').slice(0, 3).join(' ') + '...'}
-              {toggle && sample + '  '}
+            <Typography as='span' wordBreak='break-word' lineHeight='150%'>
+              {overLength ? toggle && feedText.split(' ').slice(0, 4).join(' ') + '... ' : toggle && feedText + ' '}
+              {!overLength && feedText + ' '}
             </Typography>
-            <More onClick={() => onToggle(!toggle)}>{toggle ? '접기' : '더보기'}</More>
+            {overLength && <More onClick={() => onToggle(!toggle)}>{toggle ? '접기' : '더보기'}</More>}
           </Content>
-          <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400'>
-            댓글 32개 모두 보기
-          </Typography>
+          {feedCommentCount < 3 && (
+            <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400'>
+              댓글 32개 모두 보기
+            </Typography>
+          )}
           <Typography as='p' fontSize='12px' margin='0 0 20px 0' color='gray-400'>
-            2시간 전
+            {convertRelativeTimeFormat(feedUpdatedAt)}
           </Typography>
         </FeedContent>
-        <ReplyCard
-          author='happypuppy'
-          content='뉴욕 정말 멋있죠 ㅠㅠ'
-          created_at={new Date('2022-11-15 17:42:16')}
-          profile_uri={ProfileImage}
-        />
+        {feedCommentCount > 2 && (
+          <ReplyCard
+            author='happypuppy'
+            content='뉴욕 정말 멋있죠 ㅠㅠ'
+            created_at={new Date('2022-11-15 17:42:16')}
+            profile_uri={ProfileImage}
+          />
+        )}
         <ReplyWrapper>
           <ReaplyProfileWrapper size='30px'>
             <Profile src={ProfileImage} alt='profile' />
@@ -97,11 +104,22 @@ const Container = styled.div`
     background: ${theme.colors.white};
     border: 1px solid ${theme.colors['gray-200']};
     border-radius: 10px;
+    overflow: hidden;
   `}
 `
 
 const FeedPhotoWrapper = styled.div`
   position: relative;
+`
+
+const FeedPhotoBox = styled.div`
+  width: 100%;
+`
+
+const FeedPhotoImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `
 
 const ProfileWrapper = styled.div`
@@ -159,15 +177,15 @@ const Content = styled.div`
   margin-bottom: 5px;
   font-size: 14px;
 
-  ${({toggle}) =>
-    toggle
-      ? null
-      : css`
+  ${({toggle, overLength}) =>
+    overLength && !toggle
+      ? css`
           overflow: hidden;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
-        `}
+        `
+      : null}
 `
 
 const More = styled.span`

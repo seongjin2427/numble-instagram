@@ -2,6 +2,7 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import styled from 'styled-components'
 import FeedCard from '../../components/home/FeedCard'
+import FeedList from '../../components/home/FeedList'
 import FeedTop from '../../components/home/FeedTop'
 
 const HomePage = () => {
@@ -12,7 +13,7 @@ const HomePage = () => {
     <Home>
       <FeedWrapper>
         <FeedTop />
-        <FeedCard />
+        <FeedList />
       </FeedWrapper>
     </Home>
   )
