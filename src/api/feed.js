@@ -1,6 +1,7 @@
 import ApiConfig from '../dataManager/apiConfig'
 
-const getFeedListApi = async (pageIndex, size) => {
+const getFeedListApi = async ({pageIndex, size}) => {
+  console.log('getFeedListApi', pageIndex, size)
   try {
     const result = await ApiConfig.request({
       method: 'get',

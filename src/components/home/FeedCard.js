@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, {forwardRef} from 'react'
 import styled, {css} from 'styled-components'
 
 import Carousel from './Carousel'
@@ -21,12 +21,15 @@ const feed = {
   contentsList: [{contentsId: 1, contentsUrl: 'aa', createdAt: 'aa', updatedAt: 'aa'}],
 }
 
-const FeedCard = ({feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt}) => {
+const FeedCard = (
+  {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt},
+  ref,
+) => {
   const [toggle, onToggle] = useToggle()
   const overLength = feedText.length >= 100
 
   return (
-    <Container>
+    <Container ref={ref}>
       <FeedPhotoWrapper>
         <Carousel>
           {contentsList.map(({contentsUrl}, idx) => (
@@ -40,7 +43,7 @@ const FeedCard = ({feedId, contentsList, feedLoginId, feedText, feedCommentCount
             <Profile src={ProfileImage} alt='profile' />
           </ProfileImageWrapper>
           <Typography as='p' fontWeight={600} color='white'>
-            happypuppy
+            {feedLoginId}
           </Typography>
         </ProfileWrapper>
         <MoreWrapper>
@@ -239,4 +242,4 @@ const ReplyButton = styled.button`
   padding: 0 15px;
 `
 
-export default FeedCard
+export default forwardRef(FeedCard)
