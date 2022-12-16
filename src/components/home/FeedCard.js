@@ -1,26 +1,26 @@
 /* eslint-disable react/prop-types */
-import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
+import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 
-import Carousel from './Carousel'
 import Icons from '../common/Icons'
-import useToggle from '../../hooks/useToggle'
+import Profile from '../common/Profile'
 import Typography from '../common/Typography'
+import FeedIconSet from '../common/FeedIconSet'
+import FeedCommand from '../common/FeedCommand'
+import FeedText from './FeedText'
+import Carousel from './Carousel'
+import CommandCard from './CommandCard'
+import useToggle from '../../hooks/useToggle'
+import {getCommentsApi} from '../../api/feed'
+import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 import sampleProfile from '../../assets/images/sample_profile.svg'
-import ReplyCard from './ReplyCard'
-import {convertRelativeTimeFormat} from '../../utils/timeformat'
-import {getCommentsApi} from '../../api/feed'
-import Profile from '../common/Profile'
-import FeedIconSet from '../common/FeedIconSet'
-import FeedText from './FeedText'
-import FeedCommand from '../common/FeedCommand'
+import Modal from '../common/Modal'
+import ModalContent from './ModalContent'
 
-const FeedCard = (
-  {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt},
-  ref,
-) => {
-  const [commentToggle, commentOnToggle] = useToggle()
+const FeedCard = (props, ref) => {
+  const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt} = props
+  const [modal, onToggleModal] = useToggle()
   const [comments, setComments] = useState([])
 
   const getComments = useCallback(async () => {
@@ -67,9 +67,13 @@ const FeedCard = (
             {convertRelativeTimeFormat(feedUpdatedAt)}
           </Typography>
         </FeedContent>
-        {feedCommentCount < 3 && comments.map(c => <ReplyCard key={c.id} profile_uri={ProfileImage} {...c} />)}
+        {feedCommentCount < 3 &&
+          comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} toggleModal={onToggleModal} {...c} />)}
         <FeedCommand profile={sampleProfile} />
       </FeedContentWrapper>
+      <Modal toggle={modal} onToggle={onToggleModal}>
+        <ModalContent comments={comments} profileImage={sampleProfile} {...props} />
+      </Modal>
     </Container>
   )
 }
@@ -119,9 +123,4 @@ const FeedContent = styled.div`
   margin: 0 17px;
 `
 
-const ProfileImage = styled.img`
-  width: 100%;
-  height: 100%;
-`
-
-export default forwardRef(FeedCard)
+export default React.memo(forwardRef(FeedCard))

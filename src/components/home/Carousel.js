@@ -30,9 +30,13 @@ const DEFAULT_SETTINGS = {
 
 // eslint-disable-next-line react/prop-types
 const Carousel = ({settings = DEFAULT_SETTINGS, children}) => {
+  const configure = {
+    ...DEFAULT_SETTINGS,
+    ...settings,
+  }
   return (
     <SlickWrapper>
-      <Slick {...settings}>{children}</Slick>
+      <Slick {...configure}>{children}</Slick>
     </SlickWrapper>
   )
 }

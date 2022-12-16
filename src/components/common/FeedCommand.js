@@ -9,16 +9,22 @@ const FeedCommand = ({profile}) => {
 
   const onChangeCommand = e => setCommand(e.target.value)
 
+  const clickHandler = e => {
+    e.preventDefault()
+  }
+
   return (
-    <ReplyWrapper>
+    <CommandWrapper>
       {profile && <Profile size='30px' src={profile} color='gray-900' />}
       <Input type='text' placeholder='댓글 달기...' onChange={onChangeCommand} value={command} />
-      <ReplyButton disabled={!command.length}>게시</ReplyButton>
-    </ReplyWrapper>
+      <CommandButton onClick={clickHandler} disabled={!command.length}>
+        게시
+      </CommandButton>
+    </CommandWrapper>
   )
 }
 
-const ReplyWrapper = styled.div`
+const CommandWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -28,6 +34,7 @@ const ReplyWrapper = styled.div`
 `
 
 const Input = styled.input`
+  width: 100%;
   height: 20px;
   font-size: 14px;
   flex: 1;
@@ -39,7 +46,7 @@ const Input = styled.input`
   }
 `
 
-const ReplyButton = styled.button`
+const CommandButton = styled.button`
   ${({theme}) => css`
     height: 100%;
     background: none;

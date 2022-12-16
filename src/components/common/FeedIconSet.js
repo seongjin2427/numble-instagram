@@ -21,7 +21,7 @@ const IconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 23px 17px;
+    margin: 15px 17px;
 
     svg {
       stroke: ${theme.colors['gray-900']};
