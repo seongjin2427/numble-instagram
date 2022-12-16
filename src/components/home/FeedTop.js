@@ -1,18 +1,15 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import Sample1 from '../../assets/images/sample_1.svg'
-import Sample2 from '../../assets/images/sample_2.svg'
-import Sample3 from '../../assets/images/sample_3.svg'
-import Sample4 from '../../assets/images/sample_4.svg'
+import {MEDEA_QUERY} from '../../style/media-query'
 
-const FeedTop = () => {
-  const profileImage = [Sample1, Sample2, Sample3, Sample4]
+const FeedTop = ({friends}) => {
   return (
     <Container>
-      {profileImage.map((p, idx) => (
+      {friends.map(({src}, idx) => (
         <ProfileWrapper key={idx}>
-          <Profile src={p} alt={'profile'} />
+          <Profile src={src} alt={'profile'} />
         </ProfileWrapper>
       ))}
     </Container>
@@ -31,6 +28,9 @@ const Container = styled.div`
     background: ${theme.colors.white};
     border: 1px solid ${theme.colors['gray-200']};
     border-radius: 10px;
+
+    ${MEDEA_QUERY.WIDE_DESKTOP} {
+    display: none;
   `}
 `
 
