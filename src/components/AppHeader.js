@@ -8,17 +8,21 @@ import Profile from '../assets/images/sample_profile.svg'
 import Logo from '../assets/images/logo.svg'
 import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
 import useToggle from '../hooks/useToggle'
+import Modal from './common/Modal'
+import ModalNewFeedImage from './header/ModalNewFeedImage'
 
 const AppHeader = () => {
-  const [toggle, onToggle] = useToggle()
+  const [menuToggle, onMenuToggle] = useToggle()
+  const [newFeedToggle, onNewFeedToggle] = useToggle()
   // const dispatch = useDispatch()
   // const sidebarShow = useSelector((state) => state.sidebarShow)
   // const [visible, setVisible] = useState(false)
 
-  const toggleModal = () => onToggle(!toggle)
+  const toggleMenu = () => onMenuToggle(!menuToggle)
 
   return (
     <Header>
+      <button onClick={() => onNewFeedToggle(!newFeedToggle)}>테스트</button>
       <HeaderWrapper>
         <ImageWrapper>
           <Image src={Logo} alt='logo' />
@@ -37,10 +41,10 @@ const AppHeader = () => {
             <Icons icon='UserIcon' size='20px' />
           </MenuItem>
           <MenuItem>
-            <ProfileWrapper onClick={toggleModal}>
+            <ProfileWrapper onClick={toggleMenu}>
               <Image src={Profile} alt='profile' />
             </ProfileWrapper>
-            <ModalWrapper toggle={toggle}>
+            <ModalWrapper toggle={menuToggle}>
               {HEADER_MODAL_LIST.map(({icon, title, url}, idx) => (
                 <ModalItem key={idx}>
                   <Icons icon={icon} size='20px' />
@@ -48,6 +52,9 @@ const AppHeader = () => {
                 </ModalItem>
               ))}
             </ModalWrapper>
+            <Modal width='650px' height='720px' toggle={newFeedToggle} onToggle={onNewFeedToggle}>
+              <ModalNewFeedImage />
+            </Modal>
           </MenuItem>
         </MenuList>
       </HeaderWrapper>

@@ -2,23 +2,25 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-const Modal = ({children, toggle, onToggle}) => {
+const Modal = ({children, width = '90vw', height = '90vh', toggle, onToggle}) => {
   const closeModal = () => onToggle(false)
 
   return (
     <>
       <Backdrop onClick={closeModal} toggle={toggle} />
-      <Container toggle={toggle}>{children}</Container>
+      <Container width={width} height={height} toggle={toggle}>
+        {children}
+      </Container>
     </>
   )
 }
 
 const Container = styled.div`
-  ${({theme, toggle}) => css`
+  ${({theme, toggle, width, height}) => css`
     display: ${toggle ? 'block' : 'none'};
-    width: 90vw;
+    width: ${width};
     max-width: 1072px;
-    height: 90vh;
+    height: ${height};
     max-height: 700px;
     position: fixed;
     top: 50%;

@@ -19,7 +19,7 @@ import Modal from '../common/Modal'
 import ModalContent from './ModalContent'
 
 const FeedCard = (props, ref) => {
-  const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt} = props
+  const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt} = props
   const [modal, onToggleModal] = useToggle()
   const [comments, setComments] = useState([])
 
@@ -64,7 +64,7 @@ const FeedCard = (props, ref) => {
             </Typography>
           )}
           <Typography as='p' fontSize='12px' margin='0 0 20px 0' color='gray-400'>
-            {convertRelativeTimeFormat(feedUpdatedAt)}
+            {convertRelativeTimeFormat(feedCreatedAt)}
           </Typography>
         </FeedContent>
         {feedCommentCount < 3 &&

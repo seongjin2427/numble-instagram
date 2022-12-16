@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 
 import Icons from '../common/Icons'
 import Profile from '../common/Profile'
