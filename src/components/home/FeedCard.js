@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {forwardRef} from 'react'
+import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 import styled, {css} from 'styled-components'
 
 import Carousel from './Carousel'
@@ -10,23 +10,27 @@ import Typography from '../common/Typography'
 import ProfileImage from '../../assets/images/sample_profile.svg'
 import ReplyCard from './ReplyCard'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
-
-const feed = {
-  feedCommentCount: 0,
-  feedCreatedAt: '',
-  feedId: 1,
-  feedLoginId: 'sss',
-  feedText: 'sss',
-  feedUpdatedAt: '',
-  contentsList: [{contentsId: 1, contentsUrl: 'aa', createdAt: 'aa', updatedAt: 'aa'}],
-}
+import {getCommentsApi} from '../../api/feed'
 
 const FeedCard = (
   {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt},
   ref,
 ) => {
   const [toggle, onToggle] = useToggle()
+  const [commentToggle, commentOnToggle] = useToggle()
+  const [comments, setComments] = useState([])
   const overLength = feedText.length >= 100
+
+  const getComments = useCallback(async () => {
+    const {isSuccess, result} = await getCommentsApi({feedId, pageIndex: 0, size: 10})
+    if (isSuccess) {
+      setComments(result)
+    }
+  }, [feedId])
+
+  useEffect(() => {
+    getComments()
+  }, [getComments])
 
   return (
     <Container ref={ref}>
@@ -70,9 +74,9 @@ const FeedCard = (
               {overLength ? toggle && feedText.split(' ').slice(0, 4).join(' ') + '... ' : toggle && feedText + ' '}
               {!overLength && feedText + ' '}
             </Typography>
-            {overLength && <More onClick={() => onToggle(!toggle)}>{toggle ? '접기' : '더보기'}</More>}
+            {overLength && <More onClick={() => onToggle(!toggle)}>{toggle ? '접기' : null}</More>}
           </Content>
-          {feedCommentCount < 3 && (
+          {feedCommentCount > 2 && (
             <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400'>
               댓글 32개 모두 보기
             </Typography>
@@ -81,14 +85,7 @@ const FeedCard = (
             {convertRelativeTimeFormat(feedUpdatedAt)}
           </Typography>
         </FeedContent>
-        {feedCommentCount > 2 && (
-          <ReplyCard
-            author='happypuppy'
-            content='뉴욕 정말 멋있죠 ㅠㅠ'
-            created_at={new Date('2022-11-15 17:42:16')}
-            profile_uri={ProfileImage}
-          />
-        )}
+        {feedCommentCount < 3 && comments.map(c => <ReplyCard key={c.id} profile_uri={ProfileImage} {...c} />)}
         <ReplyWrapper>
           <ReaplyProfileWrapper size='30px'>
             <Profile src={ProfileImage} alt='profile' />

@@ -9,7 +9,7 @@ const FeedList = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [target, setTarget] = useState(null)
   const [isLast, setIsLast] = useState(false)
-  const {current: page} = useRef({pageIndex: 0, size: 3})
+  const {current: page} = useRef({pageIndex: 0, size: 10})
 
   const getFeedItems = useCallback(async () => {
     setIsLoading(true)

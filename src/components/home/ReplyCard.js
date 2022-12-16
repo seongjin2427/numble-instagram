@@ -5,8 +5,8 @@ import Typography from '../common/Typography'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 // eslint-disable-next-line react/prop-types
-const ReplyCard = ({author, profile_uri, content, created_at}) => {
-  const converted = convertRelativeTimeFormat(created_at)
+const ReplyCard = ({id, loginId, profile_uri, commentText, updatedAt}) => {
+  const converted = convertRelativeTimeFormat(updatedAt)
 
   return (
     <Container>
@@ -16,10 +16,10 @@ const ReplyCard = ({author, profile_uri, content, created_at}) => {
       <ProfileWrapper>
         <ReplyContent>
           <Typography as='span' fontSize='14px' fontWeight={600} color='gray-900' margin='0 5px 0 0'>
-            {author}
+            {loginId}
           </Typography>
           <Typography as='span' display='inline' fontSize='14px' fontWeight={500} color='gray-900' lineHeight='130%'>
-            {content}
+            {commentText}
           </Typography>
         </ReplyContent>
         <Typography as='span' fontSize='12px' color='gray-500'>

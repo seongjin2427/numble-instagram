@@ -33,7 +33,6 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  max-width: 1440px;
   padding-bottom: 100px;
   background: ${({theme}) => theme.colors['gray-50']};
 
