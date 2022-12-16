@@ -10,16 +10,18 @@ const Profile = ({size = '80px', gap = '20px', src, loginId, color = 'gray-900',
       <ProfileImageWrapper size={size}>
         <ProfileImage src={src} alt='profile' />
       </ProfileImageWrapper>
-      <TextWrapper>
-        <LoginId color={color} style={realName ? null : {fontSize: '14px'}}>
-          {loginId}
-        </LoginId>
-        {realName && (
-          <Typography as='p' fontSize='16px' fontWeight={500} color='gray-500' margin='10px 0 0 0'>
-            {realName}
-          </Typography>
-        )}
-      </TextWrapper>
+      {loginId && (
+        <TextWrapper>
+          <LoginId color={color} style={realName ? null : {fontSize: '14px'}}>
+            {loginId}
+          </LoginId>
+          {realName && (
+            <Typography as='p' fontSize='16px' fontWeight={500} color='gray-500' margin='10px 0 0 0'>
+              {realName}
+            </Typography>
+          )}
+        </TextWrapper>
+      )}
     </ProfileWrapper>
   )
 }

@@ -7,10 +7,11 @@ import Icons from '../common/Icons'
 import useToggle from '../../hooks/useToggle'
 import Typography from '../common/Typography'
 
-import ProfileImage from '../../assets/images/sample_profile.svg'
+import sampleProfile from '../../assets/images/sample_profile.svg'
 import ReplyCard from './ReplyCard'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 import {getCommentsApi} from '../../api/feed'
+import Profile from '../common/Profile'
 
 const FeedCard = (
   {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt},
@@ -43,12 +44,7 @@ const FeedCard = (
           ))}
         </Carousel>
         <ProfileWrapper>
-          <ProfileImageWrapper size='30px'>
-            <Profile src={ProfileImage} alt='profile' />
-          </ProfileImageWrapper>
-          <Typography as='p' fontWeight={600} color='white'>
-            {feedLoginId}
-          </Typography>
+          <Profile size='30px' src={sampleProfile} gap='5px' loginId={feedLoginId} color='white' />
         </ProfileWrapper>
         <MoreWrapper>
           <Icons icon='MoreCircleIcon' size='30px' />
@@ -87,9 +83,7 @@ const FeedCard = (
         </FeedContent>
         {feedCommentCount < 3 && comments.map(c => <ReplyCard key={c.id} profile_uri={ProfileImage} {...c} />)}
         <ReplyWrapper>
-          <ReaplyProfileWrapper size='30px'>
-            <Profile src={ProfileImage} alt='profile' />
-          </ReaplyProfileWrapper>
+          <Profile size='30px' src={sampleProfile} color='gray-900' />
           <Input type='text' placeholder='댓글 달기...' />
           <ReplyButton>게시</ReplyButton>
         </ReplyWrapper>
@@ -207,11 +201,7 @@ const ReplyWrapper = styled.div`
   border-top: 0.5px solid ${({theme}) => theme.colors['gray-300']};
 `
 
-const ReaplyProfileWrapper = styled(ProfileImageWrapper)`
-  position: unset;
-`
-
-const Profile = styled.img`
+const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
 `
