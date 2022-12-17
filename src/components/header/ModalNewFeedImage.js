@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import {useSelector} from 'react-redux'
 import React, {useRef, useState} from 'react'
 
@@ -13,11 +13,14 @@ import sampleProfile from '../../assets/images/sample_1.svg'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {storage} from '../../utils/firebase'
 import {uploadFeedApi} from '../../api/feed'
+import Modal from '../common/Modal'
+import useToggle from '../../hooks/useToggle'
 
 const ModalNewFeedImage = ({onToggle}) => {
   const user = useSelector(({LoginReducer}) => LoginReducer.user)
   const {loginId, realName} = user
 
+  const [cancelToggle, onCancelToggle] = useToggle()
   const [imageList, handleFiles] = useImageList()
   const [thumbnails, setThumbnails] = useState([])
   const [isNext, setIsNext] = useState(false)
@@ -48,6 +51,7 @@ const ModalNewFeedImage = ({onToggle}) => {
   const onInputImage = () => imgRef.current.click()
   const onDragOver = e => e.preventDefault()
   const closeModal = () => onToggle(false)
+  const toggleCancelModal = () => onCancelToggle(!cancelToggle)
 
   const uploadFeed = async () => {
     try {
@@ -74,7 +78,7 @@ const ModalNewFeedImage = ({onToggle}) => {
       <Header>
         {isNext ? (
           <>
-            <PrevButton onClick={() => setIsNext(false)}>
+            <PrevButton onClick={toggleCancelModal}>
               <Icons icon='ArrowLeftIcon' size='15px' />
             </PrevButton>
             <Title>새 게시물 만들기</Title>
@@ -98,6 +102,9 @@ const ModalNewFeedImage = ({onToggle}) => {
           <AddNewImageStep thumbnails={thumbnails} onInputImage={onInputImage} />
         )}
       </Body>
+      <Modal width='450px' height='220px' toggle={cancelToggle} onToggle={toggleCancelModal}>
+        <CancleModal removeToggle={onToggle} cancelToggle={toggleCancelModal} />
+      </Modal>
     </Container>
   )
 }
@@ -162,6 +169,21 @@ const CreateFeedStep = ({feedText, setFeedText, thumbnails}) => {
         </MenuWrapper>
       </ContentWrapper>
     </CreateFeedContainer>
+  )
+}
+
+const CancleModal = ({removeToggle, cancelToggle}) => {
+  return (
+    <NotificationContainer>
+      <NotificationWrapper>
+        <Notification title='true'>게시물을 삭제하시겠어요?</Notification>
+        <Notification>지금 나가면 수정 내용이 저장되지 않습니다.</Notification>
+      </NotificationWrapper>
+      <CancelButton red onClick={() => removeToggle(false)}>
+        삭제
+      </CancelButton>
+      <CancelButton onClick={cancelToggle}>취소</CancelButton>
+    </NotificationContainer>
   )
 }
 
@@ -285,6 +307,48 @@ const MenuWrapper = styled.div`
   svg {
     stroke: ${({theme}) => theme.colors['gray-300']};
   }
+`
+
+const NotificationContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const NotificationWrapper = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid ${({theme}) => theme.colors['gray-300']};
+`
+
+const Notification = styled.p`
+  ${({theme, title}) => css`
+    color: ${title ? theme.colors['gray-900'] : theme.colors['gray-500']};
+    font-weight: ${title ? 600 : 500};
+    margin-bottom: ${title ? '10px' : 0};
+  `}
+`
+
+const CancelButton = styled.button`
+  ${({theme, red}) => css`
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid ${theme.colors['gray-300']};
+    color: ${red ? theme.colors.red : theme.colors.black};
+    font-size: 14px;
+    font-weight: ${red ? 600 : 500};
+    cursor: pointer;
+  `}
 `
 
 export default ModalNewFeedImage
