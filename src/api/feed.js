@@ -27,7 +27,7 @@ const getCommentsApi = async ({feedId, pageIndex, size}) => {
         size,
       },
     })
-    console.log(result)
+
     return result.data
   } catch (err) {
     console.log(err)
@@ -47,4 +47,17 @@ const uploadFeedApi = async feed => {
   }
 }
 
-export {getFeedListApi, getCommentsApi, uploadFeedApi}
+const updateFeedApi = async (feedId, feedText) => {
+  try {
+    const result = await ApiConfig.request({
+      method: 'patch',
+      url: `${process.env.REACT_APP_API}/app/feeds/${feedId}`,
+      data: {feedText},
+    })
+    console.log(result)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export {getFeedListApi, getCommentsApi, uploadFeedApi, updateFeedApi}

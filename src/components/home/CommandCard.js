@@ -1,15 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 import Typography from '../common/Typography'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 // eslint-disable-next-line react/prop-types
-const CommandCard = ({id, loginId, profile_uri, commentText, updatedAt, toggleModal}) => {
+const CommandCard = ({id, loginId, profile_uri, commentText, updatedAt, toggleModal, cursor}) => {
   const converted = convertRelativeTimeFormat(updatedAt)
 
   return (
-    <Container onClick={() => toggleModal && toggleModal(id)}>
+    <Container onClick={() => toggleModal && toggleModal(id)} cursor={cursor}>
       <ProfileImageWrapper>
         <ProfileImage src={profile_uri} alt='profile' />
       </ProfileImageWrapper>
@@ -31,14 +31,16 @@ const CommandCard = ({id, loginId, profile_uri, commentText, updatedAt, toggleMo
 }
 
 const Container = styled.button`
-  display: flex;
-  width: 100%;
-  gap: 10px;
-  padding: 10px 15px 20px 15px;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
+  ${({cursor = 'pointer'}) => css`
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    padding: 10px 15px 20px 15px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: ${cursor};
+  `}
 `
 
 const ProfileWrapper = styled.div`

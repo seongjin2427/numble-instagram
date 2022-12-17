@@ -11,8 +11,7 @@ import Typography from '../common/Typography'
 import sampleProfile from '../../assets/images/sample_1.svg'
 
 const CreateFeedStep = ({feedText, setFeedText, thumbnails}) => {
-  const user = useSelector(({LoginReducer}) => LoginReducer.user)
-  const {loginId} = user
+  const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
 
   const onChangeTextArea = e => {
     setFeedText(e.target.value)
@@ -21,7 +20,7 @@ const CreateFeedStep = ({feedText, setFeedText, thumbnails}) => {
   return (
     <CreateFeedContainer>
       <CarouselWrapper>
-        <Carousel>
+        <Carousel settings={{dots: false}}>
           {thumbnails.map((t, idx) => (
             <ThumbnailWrapper key={idx}>
               <Thumbnail src={t} alt='img' />

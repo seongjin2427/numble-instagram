@@ -22,8 +22,8 @@ const AppHeader = () => {
   const getUserInfo = useCallback(async () => {
     const loginId = localStorage.getItem('loginId')
     const {isSuccess, result} = await getMyPageInfoApi(loginId)
+
     if (isSuccess) {
-      console.log(result)
       dispatch(loginAction(result))
     }
   }, [dispatch])
