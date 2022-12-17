@@ -11,7 +11,11 @@ const LoginReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          name: action.data.name,
+          loginId: action.data.loginId,
+          realName: action.data.realName,
+          feedCount: action.data.feedCount,
+          followerCount: action.data.followerCount,
+          followingCount: action.data.followingCount,
         },
       }
     }

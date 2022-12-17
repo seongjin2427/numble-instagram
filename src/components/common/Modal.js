@@ -30,6 +30,7 @@ const Container = styled.div`
     background: ${theme.colors.white};
     border-radius: 10px;
     overflow: hidden;
+    cursor: default;
   `}
 `
 
@@ -43,6 +44,7 @@ const Backdrop = styled.div`
     right: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 10;
+    cursor: default;
   `}
 `
 

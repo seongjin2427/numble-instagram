@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import Icons from '../common/Icons'
+import Icons from './Icons'
 
 // eslint-disable-next-line react/prop-types
 const ArrowButton = ({direction, onClick, className}) => {

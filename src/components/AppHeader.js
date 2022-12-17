@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useEffect} from 'react'
 import styled, {css} from 'styled-components'
 
 import Icons from './common/Icons'
@@ -10,11 +10,28 @@ import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
 import useToggle from '../hooks/useToggle'
 import Modal from './common/Modal'
 import ModalNewFeedImage from './header/ModalNewFeedImage'
+import {useDispatch} from 'react-redux'
+import {getMyPageInfoApi} from '../api/myPage'
+import {loginAction} from '../store/actions/login'
 
 const AppHeader = () => {
   const [menuToggle, onMenuToggle] = useToggle()
   const [newFeedToggle, onNewFeedToggle] = useToggle()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
+
+  const getUserInfo = useCallback(async () => {
+    const loginId = localStorage.getItem('loginId')
+    const {isSuccess, result} = await getMyPageInfoApi(loginId)
+    if (isSuccess) {
+      console.log(result)
+      dispatch(loginAction(result))
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    getUserInfo()
+  }, [getUserInfo])
+
   // const sidebarShow = useSelector((state) => state.sidebarShow)
   // const [visible, setVisible] = useState(false)
 
@@ -22,7 +39,6 @@ const AppHeader = () => {
 
   return (
     <Header>
-      <button onClick={() => onNewFeedToggle(!newFeedToggle)}>테스트</button>
       <HeaderWrapper>
         <ImageWrapper>
           <Image src={Logo} alt='logo' />
@@ -32,8 +48,8 @@ const AppHeader = () => {
           <Input />
         </InputWrapper>
         <MenuList>
-          {HEADER_MENU_LIST.map(({icon, black, url}, idx) => (
-            <MenuItem key={idx} black={black}>
+          {HEADER_MENU_LIST.map(({icon, black, url, clickHandler}, idx) => (
+            <MenuItem key={idx} black={black} onClick={() => clickHandler(onNewFeedToggle)}>
               <Icons icon={icon} size='20px' />
             </MenuItem>
           ))}
@@ -52,9 +68,11 @@ const AppHeader = () => {
                 </ModalItem>
               ))}
             </ModalWrapper>
-            <Modal width='650px' height='720px' toggle={newFeedToggle} onToggle={onNewFeedToggle}>
-              <ModalNewFeedImage />
-            </Modal>
+            {newFeedToggle && (
+              <Modal width='auto' height='auto' toggle={newFeedToggle} onToggle={onNewFeedToggle}>
+                <ModalNewFeedImage onToggle={onNewFeedToggle} />
+              </Modal>
+            )}
           </MenuItem>
         </MenuList>
       </HeaderWrapper>

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Icons from '../common/Icons'
 import Profile from '../common/Profile'
-import Carousel from './Carousel'
+import Carousel from '../common/Carousel'
 import Typography from '../common/Typography'
 import FeedIconSet from '../common/FeedIconSet'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'

@@ -34,4 +34,17 @@ const getCommentsApi = async ({feedId, pageIndex, size}) => {
   }
 }
 
-export {getFeedListApi, getCommentsApi}
+const uploadFeedApi = async feed => {
+  try {
+    const result = await ApiConfig.request({
+      method: 'post',
+      url: `${process.env.REACT_APP_API}/app/feed`,
+      data: feed,
+    })
+    console.log(result)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export {getFeedListApi, getCommentsApi, uploadFeedApi}

@@ -20,7 +20,7 @@ const HEADER_MENU_LIST = [
     url: '/',
     black: false,
     clickHandler(fn) {
-      console.log('/')
+      fn(true)
     },
   },
   {
