@@ -29,20 +29,23 @@ const DEFAULT_SETTINGS = {
 }
 
 // eslint-disable-next-line react/prop-types
-const Carousel = ({settings = DEFAULT_SETTINGS, children}) => {
+const Carousel = ({height = '100%', settings = DEFAULT_SETTINGS, children}) => {
   const configure = {
     ...DEFAULT_SETTINGS,
     ...settings,
   }
   return (
-    <SlickWrapper>
+    <SlickWrapper height={height}>
       <Slick {...configure}>{children}</Slick>
     </SlickWrapper>
   )
 }
 
 const SlickWrapper = styled.div`
-  ${({theme}) => css`
+  ${({theme, height}) => css`
+    width: 100%;
+    height: ${height};
+
     .slick-slider {
       position: relative;
     }
