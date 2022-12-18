@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled, {css} from 'styled-components'
+import {useNavigate} from 'react-router-dom'
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 
 import Icons from '../common/Icons'
@@ -12,8 +13,10 @@ const ChatWindow = () => {
   const [target, setTarget] = useState(null)
   const {current: page} = useRef({pageIndex: 0, size: 30})
   const scrollRef = useRef()
+  const navigate = useNavigate()
 
   const myId = localStorage.getItem('loginId')
+  const isLogin = localStorage.getItem('jwt')
   const other = RECOMMAND_FRIENDS[0]
 
   const getChatList = useCallback(
@@ -36,6 +39,11 @@ const ChatWindow = () => {
 
     page.pageIndex = 0
     getChatList(true)
+  }
+
+  const validateAndSendChat = chat => {
+    const validated = chat.trim()
+    sendChat(validated)
   }
 
   const intersect = useCallback(
@@ -64,10 +72,11 @@ const ChatWindow = () => {
     getChatList()
   }, [getChatList])
 
-  const validateAndSendChat = chat => {
-    const validated = chat.trim()
-    sendChat(validated)
-  }
+  useEffect(() => {
+    if (!isLogin) {
+      navigate('/login')
+    }
+  }, [isLogin, navigate])
 
   return (
     <Container>

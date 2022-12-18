@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import React, {useCallback, useEffect, useState} from 'react'
 
-import Icons from '../../components/common/Icons'
+import Icons from '../common/Icons'
 import {MEDEA_QUERY} from '../../style/media-query'
 import {toggleAction} from '../../store/actions/home'
 import {getMyFeedApi} from '../../api/myPage'
@@ -12,7 +12,6 @@ const UserFeedList = () => {
   const {toggle} = useSelector(({HomeReducer}) => HomeReducer.global)
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const [feeds, setFeeds] = useState([])
 
@@ -23,13 +22,6 @@ const UserFeedList = () => {
       setFeeds(prev => [...prev, ...result])
     }
   }, [loginId])
-
-  useEffect(() => {
-    const isLogin = localStorage.getItem('jwt')
-    if (!isLogin) {
-      navigate('/')
-    }
-  }, [navigate])
 
   useEffect(() => {
     getFeeds()

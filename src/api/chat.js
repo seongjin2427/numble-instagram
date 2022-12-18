@@ -11,8 +11,6 @@ const getChatsListApi = async ({pageIndex, size}) => {
       },
     })
 
-    console.log(result)
-
     return result.data
   } catch (err) {
     console.log(err)

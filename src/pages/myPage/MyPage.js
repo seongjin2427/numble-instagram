@@ -1,9 +1,20 @@
-import React from 'react'
 import styled from 'styled-components'
+import {useNavigate} from 'react-router-dom'
+import React, {useEffect} from 'react'
+
 import UserProfile from '../../components/my-page/UserProfile'
-import UserFeedList from './UserFeedList'
+import UserFeedList from '../../components/my-page/UserFeedList'
 
 const MyPage = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const isLogin = localStorage.getItem('jwt')
+    if (!isLogin) {
+      navigate('/login')
+    }
+  }, [navigate])
+
   return (
     <Container>
       <UserProfile />

@@ -36,7 +36,7 @@ const HEADER_MENU_LIST = [
 const HEADER_MODAL_LIST = [
   {
     icon: 'UserIcon',
-    url: '/',
+    url: '/my-page',
     title: '프로필',
     clickHandler(fn) {
       console.log('/')

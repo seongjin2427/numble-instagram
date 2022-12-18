@@ -183,6 +183,14 @@ const MenuItem = styled.li`
   position: relative;
   cursor: pointer;
 
+  a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: ${({theme}) => theme.colors['gray-900']};
+    text-decoration: none;
+  }
+
   svg {
     stroke: ${({theme, black}) => theme.colors[black ? 'gray-900' : 'gray-500']};
     margin-bottom: 2px;
