@@ -1,20 +1,11 @@
-import React, {useCallback, useEffect} from 'react'
+import React from 'react'
 import styled, {css} from 'styled-components'
-import {getChatsListApi} from '../../api/chat'
+
 import Profile from '../common/Profile'
 import {RECOMMAND_FRIENDS} from '../../constants/sample'
 
 const ChatList = () => {
   const loginId = localStorage.getItem('loginId')
-
-  const getChattings = useCallback(async () => {
-    const result = await getChatsListApi({pageIndex: 0, size: 10})
-    console.log(result)
-  }, [])
-
-  useEffect(() => {
-    getChattings()
-  }, [getChattings])
 
   return (
     <Container>
@@ -39,9 +30,11 @@ const Container = styled.div`
 
 const ChatHeader = styled.div`
   ${({theme}) => css`
+    display: flex;
+    align-items: flex-end;
     width: 100%;
     height: 64px;
-    padding: 24px 24px 10px 24px;
+    padding: 0 24px 10px 24px;
     border-bottom: 0.5px solid ${theme.colors['gray-200']};
     font-size: 20px;
     font-weight: 500;

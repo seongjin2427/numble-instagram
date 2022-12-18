@@ -1,12 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import ChatList from '../../components/chat/ChatList'
+import ChatWindow from '../../components/chat/ChatWindow'
 
 const Chat = () => {
   return (
     <Container>
       <ChatCard>
         <ChatList />
+        <ChatWindow />
       </ChatCard>
     </Container>
   )

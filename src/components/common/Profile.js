@@ -4,7 +4,16 @@ import styled, {css} from 'styled-components'
 
 import Typography from './Typography'
 
-const Profile = ({size = '80px', gap = '20px', src, loginId, color = 'gray-900', realName, style}) => {
+const Profile = ({
+  size = '80px',
+  gap = '20px',
+  src,
+  loginId,
+  color = 'gray-900',
+  realName,
+  fontSize = '14px',
+  style,
+}) => {
   return (
     <ProfileWrapper gap={gap} style={style}>
       <ProfileImageWrapper size={size}>
@@ -12,7 +21,7 @@ const Profile = ({size = '80px', gap = '20px', src, loginId, color = 'gray-900',
       </ProfileImageWrapper>
       {loginId && (
         <TextWrapper>
-          <LoginId color={color} style={realName ? null : {fontSize: '14px'}}>
+          <LoginId color={color} style={realName ? null : {fontSize}}>
             {loginId}
           </LoginId>
           {realName && (
