@@ -13,11 +13,12 @@ import ModalNewFeedImage from './header/ModalNewFeedImage'
 import {useDispatch, useSelector} from 'react-redux'
 import {getMyPageInfoApi} from '../api/myPage'
 import {loginAction} from '../store/actions/login'
+import {toggleAction} from '../store/actions/home'
 
 const AppHeader = () => {
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
+  const {toggle} = useSelector(({HomeReducer}) => HomeReducer.global)
   const [menuToggle, onMenuToggle] = useToggle()
-  const [newFeedToggle, onNewFeedToggle] = useToggle()
   const dispatch = useDispatch()
 
   const getUserInfo = useCallback(async () => {
@@ -36,6 +37,9 @@ const AppHeader = () => {
   }, [loginId, getUserInfo])
 
   const toggleMenu = () => onMenuToggle(!menuToggle)
+  const toggleNewFeedModal = b => dispatch(toggleAction({toggle: b}))
+
+  console.log('toggle', toggle)
 
   return (
     <Header>
@@ -49,7 +53,7 @@ const AppHeader = () => {
         </InputWrapper>
         <MenuList>
           {HEADER_MENU_LIST.map(({icon, black, url, clickHandler}, idx) => (
-            <MenuItem key={idx} black={black} onClick={() => clickHandler(onNewFeedToggle)}>
+            <MenuItem key={idx} black={black} onClick={() => clickHandler(toggleNewFeedModal)}>
               <Icons icon={icon} size='20px' />
             </MenuItem>
           ))}
@@ -68,14 +72,14 @@ const AppHeader = () => {
                 </ModalItem>
               ))}
             </ModalWrapper>
-            {newFeedToggle && (
-              <Modal width='auto' height='auto' toggle={newFeedToggle} onToggle={onNewFeedToggle}>
-                <ModalNewFeedImage onToggle={onNewFeedToggle} />
-              </Modal>
-            )}
           </MenuItem>
         </MenuList>
       </HeaderWrapper>
+      {toggle && (
+        <Modal width='auto' height='auto' toggle={toggle} onToggle={toggleNewFeedModal}>
+          <ModalNewFeedImage onToggle={toggleNewFeedModal} />
+        </Modal>
+      )}
     </Header>
   )
 }
@@ -152,6 +156,7 @@ const MenuList = styled.ul`
   left: 0;
   background: ${({theme}) => theme.colors.white};
   box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 
   ${MEDEA_QUERY.WIDE_DESKTOP} {
     width: auto;

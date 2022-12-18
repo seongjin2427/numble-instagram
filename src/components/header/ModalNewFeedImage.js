@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
-import React, {useRef, useState} from 'react'
 import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import React, {useRef, useState} from 'react'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 
 import Icons from '../common/Icons'
@@ -17,6 +18,7 @@ import CancelModal from './CancelModal'
 
 const ModalNewFeedImage = ({onToggle}) => {
   const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
+  const navigate = useNavigate()
 
   const [imageList, handleFiles] = useImageList()
   const [thumbnails, setThumbnails] = useState([])
@@ -72,6 +74,8 @@ const ModalNewFeedImage = ({onToggle}) => {
       } else {
         alert('에러가 발생했습니다. 다시 시도해주세요.')
       }
+
+      closeModal()
     } catch (err) {
       console.log(err)
       alert('에러가 발생했습니다! 다시 시도해주세요!')

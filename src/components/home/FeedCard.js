@@ -72,7 +72,7 @@ const FeedCard = (props, ref) => {
       </FeedPhotoWrapper>
       <FeedContentWrapper>
         <FeedIconSet feedId={feedId} />
-        <FeedContent>
+        <FeedContent onClick={moveToFeed}>
           <Typography as='p' margin='0 0 10px 0' fontWeight={700}>
             좋아요 271개
           </Typography>

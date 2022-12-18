@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 
 import Modal from '../common/Modal'
 import Icons from '../common/Icons'
@@ -22,6 +23,7 @@ const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
   const feedData = useSelector(({FeedReducer}) => FeedReducer.feed)
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
   const {feedId, feedLoginId, contentsList, feedText, feedCreatedAt, feedUpdatedAt, comments, profileImage} = feedData
+  const navigate = useNavigate()
 
   const [removeToggle, onRemoveToggle] = useToggle()
 
@@ -49,6 +51,8 @@ const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
       } else {
         alert('에러가 발생하였습니다. 다시 시도해주세요.')
       }
+
+      navigate('/')
     }
   }
 
