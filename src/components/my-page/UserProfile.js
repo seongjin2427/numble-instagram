@@ -11,8 +11,6 @@ const UserProfile = () => {
   const {loginId, realName, feedCount, followerCount, followingCount} = userInfo
   const formatter = Intl.NumberFormat('en-US', {notation: 'compact', maximumFractionDigits: 1}).format
 
-  console.log(userInfo)
-
   return (
     <Container>
       <UserProfileWrapper>

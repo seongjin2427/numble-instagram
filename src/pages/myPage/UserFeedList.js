@@ -73,28 +73,23 @@ const Container = styled.div`
 const ThumbnailList = styled.div`
   display: grid;
   width: 100vw;
+  height: fit-content;
+
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
 
   ${MEDEA_QUERY.MEDIUM} {
     width: 1000px;
     gap: 20px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 `
 
 const ThumbnailWrapper = styled.div`
   width: 100%;
+  aspect-ratio: 1 / 1;
   position: relative;
-
-  :after {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-  }
-
-  ${MEDEA_QUERY.MEDIUM} {
-    height: 312px;
-  }
 `
 
 const ThumbnailImage = styled.img`

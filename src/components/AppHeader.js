@@ -39,8 +39,6 @@ const AppHeader = () => {
   const toggleMenu = () => onMenuToggle(!menuToggle)
   const toggleNewFeedModal = b => dispatch(toggleAction({toggle: b}))
 
-  console.log('toggle', toggle)
-
   return (
     <Header>
       <HeaderWrapper>
