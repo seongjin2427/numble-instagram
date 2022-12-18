@@ -1,27 +1,13 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
+
 import {getFeedListApi} from '../api/feed'
-import {useDispatch, useSelector} from 'react-redux'
-import {toggleAction} from '../store/actions/home'
 
 const useFeedList = () => {
-  const dispatch = useDispatch()
-  const {toggle} = useSelector(({HomeReducer}) => HomeReducer.global)
-
   const [feeds, setFeeds] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [target, setTarget] = useState(null)
   const [isLast, setIsLast] = useState(false)
   const {current: page} = useRef({pageIndex: 0, size: 10})
-
-  const setFeedItems = useCallback(async () => {
-    page.pageIndex = 0
-
-    const {isSuccess, result} = await getFeedListApi(page)
-    if (isSuccess) {
-      setFeeds(result)
-      dispatch(toggleAction({toggle: false}))
-    }
-  }, [page, dispatch])
 
   const getFeedItems = useCallback(async () => {
     setIsLoading(true)
@@ -46,12 +32,6 @@ const useFeedList = () => {
     },
     [isLoading, getFeedItems],
   )
-
-  useEffect(() => {
-    if (toggle) {
-      setFeedItems()
-    }
-  }, [toggle, setFeedItems, dispatch])
 
   useEffect(() => {
     getFeedItems()

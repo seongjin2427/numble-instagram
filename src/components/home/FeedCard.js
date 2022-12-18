@@ -72,13 +72,13 @@ const FeedCard = (props, ref) => {
       </FeedPhotoWrapper>
       <FeedContentWrapper>
         <FeedIconSet feedId={feedId} />
-        <FeedContent onClick={moveToFeed}>
+        <FeedContent>
           <Typography as='p' margin='0 0 10px 0' fontWeight={700}>
             좋아요 271개
           </Typography>
           <FeedText feedLoginId={feedLoginId} feedText={feedText} />
           {feedCommentCount > 2 && (
-            <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400'>
+            <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400' onClick={moveToFeed}>
               댓글 32개 모두 보기
             </Typography>
           )}
@@ -86,7 +86,8 @@ const FeedCard = (props, ref) => {
             {convertRelativeTimeFormat(feedCreatedAt)}
           </Typography>
         </FeedContent>
-        {feedCommentCount < 3 && comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} {...c} />)}
+        {feedCommentCount < 3 &&
+          comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} moveToFeed={moveToFeed} {...c} />)}
         <FeedCommand profile={sampleProfile} />
       </FeedContentWrapper>
     </Container>

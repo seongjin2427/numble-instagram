@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 
 import Modal from '../common/Modal'
 import Icons from '../common/Icons'
@@ -15,12 +15,10 @@ import CancelModal from '../header/CancelModal'
 import CommandCard from './CommandCard'
 import MoreModal from './MoreModal'
 import useToggle from '../../hooks/useToggle'
-import {toggleAction} from '../../store/actions/home'
 import {removeFeedApi} from '../../api/feed'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
-  const dispatch = useDispatch()
   const feedData = useSelector(({FeedReducer}) => FeedReducer.feed)
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
   const {feedId, feedLoginId, contentsList, feedText, feedCreatedAt, feedUpdatedAt, comments, profileImage} = feedData
@@ -45,14 +43,15 @@ const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
   const removeFeed = async () => {
     if (isAuthor) {
       const result = await removeFeedApi(feedId)
+
       if (result) {
         alert('삭제되었습니다.')
       } else {
         alert('에러가 발생하였습니다. 다시 시도해주세요.')
       }
     }
-    dispatch(toggleAction({toggle: true}))
   }
+
   return (
     <>
       <SliderWrapper>

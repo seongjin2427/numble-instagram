@@ -5,11 +5,11 @@ import Typography from '../common/Typography'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 // eslint-disable-next-line react/prop-types
-const CommandCard = ({id, loginId, profile_uri, commentText, updatedAt, toggleModal, cursor}) => {
+const CommandCard = ({loginId, profile_uri, commentText, updatedAt, cursor, moveToFeed}) => {
   const converted = convertRelativeTimeFormat(updatedAt)
 
   return (
-    <Container onClick={() => toggleModal && toggleModal(id)} cursor={cursor}>
+    <Container onClick={() => moveToFeed && moveToFeed()} cursor={cursor}>
       <ProfileImageWrapper>
         <ProfileImage src={profile_uri} alt='profile' />
       </ProfileImageWrapper>

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
 import React, {useRef, useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 
 import Icons from '../common/Icons'
@@ -14,10 +14,8 @@ import {uploadFeedApi} from '../../api/feed'
 import AddNewImageStep from './AddNewImageStep'
 import CreateFeedStep from './CreateFeedStep'
 import CancelModal from './CancelModal'
-import {toggleAction} from '../../store/actions/home'
 
 const ModalNewFeedImage = ({onToggle}) => {
-  const dispatch = useDispatch()
   const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
 
   const [imageList, handleFiles] = useImageList()
@@ -74,8 +72,6 @@ const ModalNewFeedImage = ({onToggle}) => {
       } else {
         alert('에러가 발생했습니다. 다시 시도해주세요.')
       }
-
-      dispatch(toggleAction({toggle: true}))
     } catch (err) {
       console.log(err)
       alert('에러가 발생했습니다! 다시 시도해주세요!')
