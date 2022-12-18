@@ -1,30 +1,64 @@
 /* eslint-disable react/prop-types */
-import React, {useCallback, useEffect, useRef, useState} from 'react'
 import styled, {css} from 'styled-components'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
+
+import Icons from '../common/Icons'
 import Profile from '../common/Profile'
 import {RECOMMAND_FRIENDS} from '../../constants/sample'
 import {getChatsListApi, sendChatApi} from '../../api/chat'
-import Icons from '../common/Icons'
 
 const ChatWindow = () => {
   const [chatting, setChatting] = useState([])
+  const [target, setTarget] = useState(null)
+  const {current: page} = useRef({pageIndex: 0, size: 30})
+  const scrollRef = useRef()
+
   const myId = localStorage.getItem('loginId')
   const other = RECOMMAND_FRIENDS[0]
 
-  const getChatList = useCallback(async () => {
-    const {isSuccess, result} = await getChatsListApi({pageIndex: 0, size: 20})
-    if (isSuccess) {
-      console.log(result)
-      setChatting(result)
-    }
-  }, [])
+  const getChatList = useCallback(
+    async init => {
+      const {isSuccess, result} = await getChatsListApi(page)
+      if (isSuccess) {
+        init ? setChatting(result) : setChatting(prev => [...prev, ...result])
+        page.pageIndex += 1
+      }
+    },
+    [page],
+  )
 
   const sendChat = async chat => {
     const {isSuccess} = await sendChatApi(chat)
     if (!isSuccess) {
       alert('채팅 전송에 실패했습니다.')
+      return
     }
+
+    page.pageIndex = 0
+    getChatList(true)
   }
+
+  const intersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting) {
+        setTimeout(async () => {
+          observer.unobserve(entry.target)
+          const temp = scrollRef.current.scrollTop
+          await getChatList()
+          scrollRef.current.scrollTop = temp
+        }, 400)
+      }
+    },
+    [getChatList],
+  )
+
+  useEffect(() => {
+    if (target) {
+      const intersection = new IntersectionObserver(intersect)
+      intersection.observe(target)
+      setTarget(null)
+    }
+  }, [target, intersect])
 
   useEffect(() => {
     getChatList()
@@ -32,8 +66,7 @@ const ChatWindow = () => {
 
   const validateAndSendChat = chat => {
     const validated = chat.trim()
-    console.log('validated', validated)
-    // sendChat(validated)
+    sendChat(validated)
   }
 
   return (
@@ -41,14 +74,14 @@ const ChatWindow = () => {
       <ChatWindowHeader>
         <Profile loginId={other.loginId} src={other.src} size='40px' gap='10px' fontSize='20px' chip />
       </ChatWindowHeader>
-      <ChatWindowBody>
-        {chatting.map(({chatId, loginId, content}) =>
+      <ChatWindowBody ref={scrollRef}>
+        {chatting.map(({chatId, loginId, content}, idx) =>
           myId === loginId ? (
-            <MyChatWrapper key={chatId}>
+            <MyChatWrapper key={chatId} ref={idx === chatting.length - 1 ? setTarget : null}>
               <MyChat>{content}</MyChat>
             </MyChatWrapper>
           ) : (
-            <OtherChatWrapper key={chatId}>
+            <OtherChatWrapper key={chatId} ref={idx === chatting.length - 1 ? setTarget : null}>
               <Profile src={other.src} size='40px' chip />
               <OtherChat>{content}</OtherChat>
             </OtherChatWrapper>
@@ -125,7 +158,7 @@ const ChatWindowBody = styled.div`
   display: flex;
   flex-direction: column-reverse;
   flex: 1;
-  gap: 20px;
+  gap: 25px;
   padding: 30px;
   overflow: scroll;
 `
@@ -141,12 +174,13 @@ const OtherChat = styled.div`
   ${({theme}) => css`
     padding: 10px 15px;
     max-width: 306px;
-    max-height: 92px;
+    max-height: 135px;
     background: ${theme.colors['gray-100']};
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 0px 8px 8px 8px;
     line-height: 24px;
     color: ${theme.colors['gray-900']};
+    overflow: scroll;
   `}
 `
 
