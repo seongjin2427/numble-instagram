@@ -4,6 +4,7 @@ import AppFooter from '../components/AppFooter'
 import styled from 'styled-components'
 import {supportDeviceSize} from '../style/styled'
 import {Outlet} from 'react-router'
+import {MEDEA_QUERY} from '../style/media-query'
 
 const DefaultLayout = () => {
   /*const navigate = useNavigate()
@@ -33,11 +34,9 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
-  padding-bottom: 100px;
-  background: ${({theme}) => theme.colors['gray-50']};
-
-  @media all and (max-width: ${supportDeviceSize}px) {
-    width: 100vw;
+  background: ${({theme}) => theme.colors.white};
+  ${MEDEA_QUERY.MEDIUM} {
+    background: ${({theme}) => theme.colors['gray-50']};
   }
 `
 

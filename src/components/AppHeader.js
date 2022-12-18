@@ -10,11 +10,12 @@ import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
 import useToggle from '../hooks/useToggle'
 import Modal from './common/Modal'
 import ModalNewFeedImage from './header/ModalNewFeedImage'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {getMyPageInfoApi} from '../api/myPage'
 import {loginAction} from '../store/actions/login'
 
 const AppHeader = () => {
+  const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
   const [menuToggle, onMenuToggle] = useToggle()
   const [newFeedToggle, onNewFeedToggle] = useToggle()
   const dispatch = useDispatch()
@@ -29,11 +30,10 @@ const AppHeader = () => {
   }, [dispatch])
 
   useEffect(() => {
-    getUserInfo()
-  }, [getUserInfo])
-
-  // const sidebarShow = useSelector((state) => state.sidebarShow)
-  // const [visible, setVisible] = useState(false)
+    if (!loginId) {
+      getUserInfo()
+    }
+  }, [loginId, getUserInfo])
 
   const toggleMenu = () => onMenuToggle(!menuToggle)
 

@@ -7,6 +7,8 @@ const getMyPageInfoApi = async loginId => {
       url: `${process.env.REACT_APP_API}/app/users/${loginId}/my-page`,
     })
 
+    console.log('mypage')
+
     return result.data
   } catch (err) {
     console.log(err)

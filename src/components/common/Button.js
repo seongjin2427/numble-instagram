@@ -1,17 +1,32 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-// eslint-disable-next-line react/prop-types
-const Button = ({children, fontColor = 'white', buttonColor = 'blue', disabledColor = 'lightblue', ...args}) => {
+const Button = ({
+  children,
+  fontColor = 'white',
+  buttonColor = 'blue',
+  disabledColor = 'lightblue',
+  fontSize = '16px',
+  style,
+  ...args
+}) => {
   return (
-    <RawButton fontColor={fontColor} buttonColor={buttonColor} disabledColor={disabledColor} {...args}>
+    <RawButton
+      fontColor={fontColor}
+      buttonColor={buttonColor}
+      fontSize={fontSize}
+      disabledColor={disabledColor}
+      style={{...style}}
+      {...args}
+    >
       {children}
     </RawButton>
   )
 }
 
 const RawButton = styled.button`
-  ${({theme, fontColor, buttonColor, disabledColor}) => css`
+  ${({theme, fontColor, buttonColor, fontSize, disabledColor}) => css`
     width: 100%;
     padding: 10px 0;
     border: none;
@@ -19,7 +34,7 @@ const RawButton = styled.button`
     background: ${theme.colors[buttonColor]};
     color: ${theme.colors[fontColor]};
     font-weight: 600;
-    font-size: 16px;
+    font-size: ${fontSize};
     cursor: pointer;
 
     :disabled {
