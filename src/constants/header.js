@@ -9,7 +9,7 @@ const HEADER_MENU_LIST = [
   },
   {
     icon: 'SendIcon',
-    url: '/',
+    url: '/chat',
     black: false,
     clickHandler(fn) {
       console.log('/')
@@ -17,7 +17,7 @@ const HEADER_MENU_LIST = [
   },
   {
     icon: 'AddIcon',
-    url: '/',
+    url: undefined,
     black: false,
     clickHandler(fn) {
       fn(true)
@@ -25,7 +25,7 @@ const HEADER_MENU_LIST = [
   },
   {
     icon: 'HeartIcon',
-    url: '/',
+    url: undefined,
     black: false,
     clickHandler(fn) {
       console.log('/')

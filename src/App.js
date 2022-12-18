@@ -15,6 +15,7 @@ const KakaoLoginForm = React.lazy(() => import('./components/login/KakaoLoginFor
 
 const Board = React.lazy(() => import('./pages/board/Board'))
 const MyPage = React.lazy(() => import('./pages/myPage/MyPage.js'))
+const Chat = React.lazy(() => import('./pages/chat/Chat.js'))
 
 const SignUp = React.lazy(() => import('./pages/signup/SignUp'))
 const FirstInfo = React.lazy(() => import('./components/signup/FirstInfo'))
@@ -45,7 +46,8 @@ const App = () => {
           </Route>
           <Route path='/board' element={<Board />} />
           <Route element={<DefaultLayout />}>
-            <Route path='/my-page' element={<MyPage />} />
+            <Route exact path='/my-page' element={<MyPage />} />
+            <Route exact path='/chat' element={<Chat />} />
             <Route exact path='/404' name='Page 404' element={<Page404 />} />
             <Route exact path='/500' name='Page 500' element={<Page500 />} />
             <Route exact path='/*' name='Home' element={<Home />} />

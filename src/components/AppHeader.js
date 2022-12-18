@@ -1,19 +1,21 @@
-import React, {useCallback, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import styled, {css} from 'styled-components'
+import {useDispatch, useSelector} from 'react-redux'
+import React, {useCallback, useEffect} from 'react'
 
 import Icons from './common/Icons'
 import {MEDEA_QUERY} from '../style/media-query'
 
-import Profile from '../assets/images/sample_profile.svg'
-import Logo from '../assets/images/logo.svg'
-import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
-import useToggle from '../hooks/useToggle'
 import Modal from './common/Modal'
+import useToggle from '../hooks/useToggle'
 import ModalNewFeedImage from './header/ModalNewFeedImage'
-import {useDispatch, useSelector} from 'react-redux'
-import {getMyPageInfoApi} from '../api/myPage'
 import {loginAction} from '../store/actions/login'
 import {toggleAction} from '../store/actions/home'
+import {getMyPageInfoApi} from '../api/myPage'
+import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
+
+import Logo from '../assets/images/logo.svg'
+import Profile from '../assets/images/sample_profile.svg'
 
 const AppHeader = () => {
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
@@ -43,7 +45,9 @@ const AppHeader = () => {
     <Header>
       <HeaderWrapper>
         <ImageWrapper>
-          <Image src={Logo} alt='logo' />
+          <Link to='/'>
+            <Image src={Logo} alt='logo' />
+          </Link>
         </ImageWrapper>
         <InputWrapper>
           <Icons icon='SearchIcon' size='16px' />
@@ -52,7 +56,9 @@ const AppHeader = () => {
         <MenuList>
           {HEADER_MENU_LIST.map(({icon, black, url, clickHandler}, idx) => (
             <MenuItem key={idx} black={black} onClick={() => clickHandler(toggleNewFeedModal)}>
-              <Icons icon={icon} size='20px' />
+              <Link to={url}>
+                <Icons icon={icon} size='20px' />
+              </Link>
             </MenuItem>
           ))}
           <MenuItem>
@@ -65,8 +71,10 @@ const AppHeader = () => {
             <ModalWrapper toggle={menuToggle}>
               {HEADER_MODAL_LIST.map(({icon, title, url}, idx) => (
                 <ModalItem key={idx}>
-                  <Icons icon={icon} size='20px' />
-                  {title}
+                  <Link to={url}>
+                    <Icons icon={icon} size='20px' />
+                    {title}
+                  </Link>
                 </ModalItem>
               ))}
             </ModalWrapper>
@@ -91,6 +99,7 @@ const Header = styled.div`
     height: 80px;
     background: ${theme.colors.white};
     border-bottom: 1px solid ${theme.colors['gray-200']};
+    z-index: 10;
   `}
 `
 

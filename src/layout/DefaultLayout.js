@@ -34,7 +34,9 @@ const Root = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
+  height: 100%;
   background: ${({theme}) => theme.colors.white};
+
   ${MEDEA_QUERY.MEDIUM} {
     background: ${({theme}) => theme.colors['gray-50']};
   }
