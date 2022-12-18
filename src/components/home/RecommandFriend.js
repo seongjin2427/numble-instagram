@@ -6,11 +6,14 @@ import Profile from '../common/Profile'
 
 import sample from '../../assets/images/sample_profile.svg'
 import Typography from '../common/Typography'
+import {useSelector} from 'react-redux'
 
 const RecommandFriend = ({friends}) => {
+  const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
+
   return (
     <Container>
-      <Profile src={sample} loginId='메롱' realName='블루' style={{marginBottom: '30px'}} />
+      <Profile src={sample} loginId={loginId} realName={realName} style={{marginBottom: '30px'}} />
       <RecommandList>
         <RecommandItem style={{marginBottom: '20px'}}>
           <Typography as='p' fontSize='15px' color='gray-500' fontWeight={600}>
@@ -20,9 +23,9 @@ const RecommandFriend = ({friends}) => {
             모두 보기
           </Typography>
         </RecommandItem>
-        {friends.map(({loginId, src}) => (
-          <RecommandItem key={loginId} style={{marginBottom: '7px'}}>
-            <Profile src={src} size='30px' loginId={loginId} />
+        {friends.map(({loginId: fId, src}) => (
+          <RecommandItem key={fId} style={{marginBottom: '7px'}}>
+            <Profile src={src} size='30px' loginId={fId} />
             <Typography as='p' fontSize='14px' color='blue' fontWeight={700} cursor='pointer'>
               팔로우
             </Typography>

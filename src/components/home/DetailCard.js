@@ -19,21 +19,12 @@ import {toggleAction} from '../../store/actions/home'
 import {removeFeedApi} from '../../api/feed'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
-const DetailModal = ({
-  feedId,
-  feedLoginId,
-  contentsList,
-  profileImage,
-  feedText,
-  feedCreatedAt,
-  feedUpdatedAt,
-  comments,
-  toggleMore,
-  onToggleMore,
-  onToggleModifyMode,
-}) => {
+const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
   const dispatch = useDispatch()
+  const feedData = useSelector(({FeedReducer}) => FeedReducer.feed)
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
+  const {feedId, feedLoginId, contentsList, feedText, feedCreatedAt, feedUpdatedAt, comments, profileImage} = feedData
+
   const [removeToggle, onRemoveToggle] = useToggle()
 
   const isAuthor = loginId === feedLoginId
@@ -125,13 +116,13 @@ const DetailModal = ({
 }
 
 const SliderWrapper = styled.div`
-  width: 60%;
-  height: 100%;
+  width: 698px;
+  height: 698px;
 `
 
 const FeedPhotoBox = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 698px;
+  height: 698px;
 `
 
 const FeedPhotoImage = styled.img`
@@ -182,4 +173,4 @@ const ContentFooter = styled.div`
   border-top: 1px solid ${({theme}) => theme.colors['gray-300']};
 `
 
-export default DetailModal
+export default DetailCard

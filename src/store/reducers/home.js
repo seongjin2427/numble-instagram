@@ -2,6 +2,7 @@
 const initialState = {
   global: {
     toggle: false,
+    scrollY: 0,
   },
 }
 
@@ -14,6 +15,15 @@ const HomeReducer = (state = initialState, action) => {
         global: {
           ...state.global,
           toggle: action.data.toggle,
+        },
+      }
+    }
+    case 'FIX_SCROLL': {
+      return {
+        ...state,
+        global: {
+          ...state.global,
+          scrollY: action.data.scrollY,
         },
       }
     }

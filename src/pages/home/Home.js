@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useEffect} from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
 
@@ -9,8 +9,17 @@ import {RECOMMAND_FRIENDS} from '../../constants/sample'
 import {MEDEA_QUERY} from '../../style/media-query'
 
 const HomePage = () => {
-  // Redux 값 불러오기
-  const {user} = useSelector(state => state.LoginReducer)
+  const {scrollY} = useSelector(({HomeReducer}) => HomeReducer.global)
+
+  const moveToScroll = useCallback(() => {
+    setTimeout(() => {
+      window.scrollTo({top: scrollY})
+    }, 100)
+  }, [scrollY])
+
+  useEffect(() => {
+    moveToScroll()
+  }, [moveToScroll])
 
   return (
     <Home>

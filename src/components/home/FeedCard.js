@@ -12,21 +12,18 @@ import FeedCommand from '../common/FeedCommand'
 import FeedText from './FeedText'
 import Carousel from '../common/Carousel'
 import CommandCard from './CommandCard'
-import useToggle from '../../hooks/useToggle'
+import {detailAction} from '../../store/actions/feed'
+import {fixScrollAction} from '../../store/actions/home'
 import {getCommentsApi} from '../../api/feed'
 import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 import sampleProfile from '../../assets/images/sample_profile.svg'
-import Modal from '../common/Modal'
-import ModalContent from './ModalContent'
-import {toggleAction} from '../../store/actions/home'
 
 const FeedCard = (props, ref) => {
-  const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt} = props
+  const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt, feedUpdatedAt} = props
+  const [comments, setComments] = useState([])
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [modal, onToggleModal] = useToggle()
-  const [comments, setComments] = useState([])
 
   const getComments = useCallback(async () => {
     const {isSuccess, result} = await getCommentsApi({feedId, pageIndex: 0, size: 10})
@@ -39,14 +36,21 @@ const FeedCard = (props, ref) => {
     getComments()
   }, [getComments])
 
-  const closeModal = b => {
-    dispatch(toggleAction(true))
-    onToggleModal(b)
-  }
-
   const moveToFeed = () => {
-    dispatch()
-    navigate(`/board?boardId=${feedId}`)
+    const feedData = {
+      feedId,
+      feedLoginId,
+      contentsList,
+      feedText,
+      feedCreatedAt,
+      comments,
+      feedUpdatedAt,
+      profileImage: sampleProfile,
+    }
+    const scrollY = window.scrollY
+    dispatch(detailAction(feedData))
+    dispatch(fixScrollAction({scrollY}))
+    navigate(`/board?boardId=${feedId}`, {preventScrollReset: true})
   }
 
   return (
@@ -68,7 +72,7 @@ const FeedCard = (props, ref) => {
       </FeedPhotoWrapper>
       <FeedContentWrapper>
         <FeedIconSet feedId={feedId} />
-        <FeedContent onClick={onToggleModal}>
+        <FeedContent onClick={moveToFeed}>
           <Typography as='p' margin='0 0 10px 0' fontWeight={700}>
             좋아요 271개
           </Typography>
@@ -82,15 +86,9 @@ const FeedCard = (props, ref) => {
             {convertRelativeTimeFormat(feedCreatedAt)}
           </Typography>
         </FeedContent>
-        {feedCommentCount < 3 &&
-          comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} toggleModal={onToggleModal} {...c} />)}
+        {feedCommentCount < 3 && comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} {...c} />)}
         <FeedCommand profile={sampleProfile} />
       </FeedContentWrapper>
-      {modal && (
-        <Modal toggle={modal} onToggle={closeModal}>
-          <ModalContent comments={comments} profileImage={sampleProfile} {...props} />
-        </Modal>
-      )}
     </Container>
   )
 }

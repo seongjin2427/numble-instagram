@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled, {css} from 'styled-components'
-import {useDispatch} from 'react-redux'
+import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 import React, {useState} from 'react'
 
 import Modal from '../common/Modal'
@@ -8,11 +9,11 @@ import useToggle from '../../hooks/useToggle'
 import Typography from '../common/Typography'
 import CancelModal from '../header/CancelModal'
 import CreateFeedStep from '../header/CreateFeedStep'
-import {toggleAction} from '../../store/actions/home'
 import {updateFeedApi} from '../../api/feed'
 
-const ModifyStep = ({feedId, feedText, contentsList, onToggleMore, onToggleModifyMode}) => {
-  const dispatch = useDispatch()
+const ModifyStep = ({onToggleMore, onToggleModifyMode}) => {
+  const {feedId, contentsList, feedText} = useSelector(({FeedReducer}) => FeedReducer.feed)
+  const navigate = useNavigate()
 
   const [toggleCancelModal, onToggleCancelModal] = useToggle()
   const [modifiedText, setModifiedText] = useState(feedText)
@@ -37,7 +38,7 @@ const ModifyStep = ({feedId, feedText, contentsList, onToggleMore, onToggleModif
     } else {
       alert('에러가 발생하였습니다. 다시 시도해주세요.')
     }
-    dispatch(toggleAction({toggle: true}))
+    navigate('/')
   }
   return (
     <ModifyWrapper>

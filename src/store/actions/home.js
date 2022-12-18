@@ -5,3 +5,10 @@ export const toggleAction = data => {
     data,
   }
 }
+
+export const fixScrollAction = data => {
+  return {
+    type: 'FIX_SCROLL',
+    data,
+  }
+}

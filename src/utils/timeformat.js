@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
 
-const convertRelativeTimeFormat = time => {
+const convertRelativeTimeFormat = receive => {
   const formatter = new Intl.RelativeTimeFormat('ko', {numeric: 'always'})
+  const time = new Date(receive.replace('.000Z', ''))
   const now = new Date()
 
   const diff = t => dayjs(time).diff(now, t)
