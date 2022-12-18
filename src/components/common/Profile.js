@@ -12,12 +12,14 @@ const Profile = ({
   color = 'gray-900',
   realName,
   fontSize = '14px',
+  chip,
   style,
 }) => {
   return (
     <ProfileWrapper gap={gap} style={style}>
       <ProfileImageWrapper size={size}>
         <ProfileImage src={src} alt='profile' />
+        {chip && <ChatChip />}
       </ProfileImageWrapper>
       {loginId && (
         <TextWrapper>
@@ -45,15 +47,26 @@ const ProfileImageWrapper = styled.div`
   ${({size}) => css`
     width: ${size};
     height: ${size};
-    border-radius: 50%;
-    overflow: hidden;
+    position: relative;
   `}
 `
 
 const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   object-fit: contain;
+`
+
+const ChatChip = styled.div`
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: #12b76a;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
 `
 
 const TextWrapper = styled.div`
