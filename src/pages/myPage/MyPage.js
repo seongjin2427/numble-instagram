@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import UserProfile from '../../components/my-page/UserProfile'
+import UserFeedList from './UserFeedList'
 
 const MyPage = () => {
   return (
     <Container>
       <UserProfile />
+      <UserFeedList />
     </Container>
   )
 }

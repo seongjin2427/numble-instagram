@@ -4,9 +4,7 @@ import styled, {css} from 'styled-components'
 import {useSelector} from 'react-redux'
 
 import sampleProfile from '../../assets/images/sample_profile.svg'
-import Typography from '../common/Typography'
 import {MEDEA_QUERY} from '../../style/media-query'
-import Button from '../common/Button'
 
 const UserProfile = () => {
   const userInfo = useSelector(({LoginReducer}) => LoginReducer.user)
@@ -75,12 +73,12 @@ const UserProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 375px;
-  padding: 20px 20px 76px 20px;
+  padding: 20px 20px 56px 20px;
 
   ${MEDEA_QUERY.MEDIUM} {
     flex-direction: row;
     width: 1000px;
-    height: 263px;
+    min-height: 263px;
     padding: 30px 0 0 0;
   }
 `
@@ -95,9 +93,10 @@ const ProfileImageWrapper = styled.div`
 
   ${MEDEA_QUERY.MEDIUM} {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     width: 352px;
+    margin-top: 20px;
   }
 `
 
@@ -187,15 +186,15 @@ const UserScoreList = styled.ul`
   position: absolute;
   left: 0;
   bottom: 0;
-  margin-bottom: 18px;
   border-top: 0.5px solid ${({theme}) => theme.colors['gray-200']};
   border-bottom: 0.5px solid ${({theme}) => theme.colors['gray-200']};
 
   ${MEDEA_QUERY.MEDIUM} {
+    justify-content: unset;
     height: auto;
     position: static;
     border: none;
-    justify-content: unset;
+    margin-bottom: 18px;
   }
 `
 
