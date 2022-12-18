@@ -97,7 +97,7 @@ const ButtonWrapper = styled.button`
     }
 
     .slick-disabled {
-      stroke: ${theme.colors['gray-300']};
+      stroke: ${theme.colors['gray-500']};
       cursor: default;
     }
   `}

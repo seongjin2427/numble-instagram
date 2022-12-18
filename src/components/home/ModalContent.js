@@ -14,32 +14,70 @@ import {convertRelativeTimeFormat} from '../../utils/timeformat'
 import Modal from '../common/Modal'
 import CreateFeedStep from '../header/CreateFeedStep'
 import {useDispatch, useSelector} from 'react-redux'
-import {updateFeedApi} from '../../api/feed'
+import {removeFeedApi, updateFeedApi} from '../../api/feed'
 import {toggleAction} from '../../store/actions/home'
+import CancelModal from '../header/CancelModal'
 
 const ModalContent = props => {
   const dispatch = useDispatch()
   const {toggle} = useSelector(({HomeReducer}) => HomeReducer.global)
+  const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
 
   const {feedId, contentsList, feedLoginId, profileImage, feedText, feedCreatedAt, feedUpdatedAt, comments} = props
   const [toggleMore, onToggleMore] = useToggle()
   const [modifyMode, onModifyMode] = useToggle()
+  const [toggleCancelModal, onToggleCancelModal] = useToggle()
+  const [removeToggle, onRemoveToggle] = useToggle()
+
   const [modifiedText, setModifiedText] = useState(feedText)
 
   const thumbnails = contentsList.map(({contentsUrl}) => contentsUrl)
+  const isAuthor = loginId === feedLoginId
 
   const toggleMoreModal = () => {
     onToggleMore(!toggleMore)
   }
 
   const cancelModifyMode = () => {
+    onToggleCancelModal(!toggleCancelModal)
+  }
+
+  const cancelModify = () => {
+    setModifiedText(feedText)
+    onToggleCancelModal(!toggleCancelModal)
     onToggleMore(false)
     onModifyMode(false)
   }
 
   const updateFeed = async () => {
+    const result = await updateFeedApi(feedId, modifiedText)
+    if (result) {
+      alert('수정되었습니다.')
+    } else {
+      alert('에러가 발생하였습니다. 다시 시도해주세요.')
+    }
     dispatch(toggleAction({toggle: !toggle}))
-    await updateFeedApi(feedId, modifiedText)
+  }
+
+  const toggleRemoveModal = () => onRemoveToggle(!removeToggle)
+
+  const checkRemoveFeed = () => {
+    if (isAuthor) {
+      onToggleMore(false)
+      onRemoveToggle(true)
+    }
+  }
+
+  const removeFeed = async () => {
+    if (isAuthor) {
+      const result = await removeFeedApi(feedId)
+      if (result) {
+        alert('삭제되었습니다.')
+      } else {
+        alert('에러가 발생하였습니다. 다시 시도해주세요.')
+      }
+    }
+    dispatch(toggleAction({toggle: !toggle}))
   }
 
   return (
@@ -48,19 +86,22 @@ const ModalContent = props => {
         <ModifyWrapper>
           <Header>
             <HeaderButton onClick={cancelModifyMode}>취소</HeaderButton>
-            <Typography color='gray-900' font-size='20px' fontWeight={600}>
+            <Typography color='gray-900' fontSize='20px' fontWeight={600}>
               정보수정
             </Typography>
             <HeaderButton blue onClick={updateFeed}>
               완료
             </HeaderButton>
           </Header>
-          <CreateFeedStep
-            thumbnails={thumbnails}
-            feedText={modifiedText}
-            setFeedText={setModifiedText}
-            carouselSetting={{dots: false}}
-          />
+          <CreateFeedStep thumbnails={thumbnails} feedText={modifiedText} setFeedText={setModifiedText} />
+          <Modal width='448px' height='223px' toggle={toggleCancelModal} onToggle={onToggleCancelModal}>
+            <CancelModal
+              title='게시물을 삭제하시겠어요?'
+              subtitle='지금 나가면 수정 내용이 저장되지 않습니다'
+              removeToggle={cancelModify}
+              cancelToggle={cancelModifyMode}
+            />
+          </Modal>
         </ModifyWrapper>
       ) : (
         <>
@@ -107,7 +148,20 @@ const ModalContent = props => {
             </ContentFooter>
           </ContentWrapper>
           <Modal width='448px' height='auto' toggle={toggleMore} onToggle={onToggleMore}>
-            <MoreModal feedLoginId={feedLoginId} onToggle={onToggleMore} onModifyMode={onModifyMode} />
+            <MoreModal
+              isAuthor={isAuthor}
+              onToggle={onToggleMore}
+              onModifyMode={onModifyMode}
+              checkRemoveFeed={checkRemoveFeed}
+            />
+          </Modal>
+          <Modal width='448px' height='223px' toggle={removeToggle} onToggle={onRemoveToggle}>
+            <CancelModal
+              title='게시물을 삭제하시겠어요?'
+              subtitle='이 게시물을 삭제하시겠어요?'
+              removeToggle={removeFeed}
+              cancelToggle={toggleRemoveModal}
+            />
           </Modal>
         </>
       )}
@@ -115,20 +169,18 @@ const ModalContent = props => {
   )
 }
 
-const MoreModal = ({feedLoginId, onToggle, onModifyMode}) => {
-  const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
-
-  const validateUser = feedLoginId === loginId
-
+const MoreModal = ({isAuthor, onToggle, onModifyMode, checkRemoveFeed}) => {
   const moveToModifyModal = () => {
-    if (validateUser) {
+    if (isAuthor) {
       onModifyMode(true)
     }
   }
 
   return (
     <MoreList>
-      <MoreItem remove>삭제</MoreItem>
+      <MoreItem remove onClick={checkRemoveFeed}>
+        삭제
+      </MoreItem>
       <MoreItem onClick={moveToModifyModal}>수정</MoreItem>
       <MoreItem>좋아요 수 숨기기</MoreItem>
       <MoreItem>댓글 기능 해제</MoreItem>

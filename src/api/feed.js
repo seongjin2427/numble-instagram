@@ -36,28 +36,47 @@ const getCommentsApi = async ({feedId, pageIndex, size}) => {
 
 const uploadFeedApi = async feed => {
   try {
-    const result = await ApiConfig.request({
+    const {data} = await ApiConfig.request({
       method: 'post',
       url: `${process.env.REACT_APP_API}/app/feed`,
       data: feed,
     })
-    console.log(result)
+
+    return data.isSuccess
   } catch (err) {
     console.log(err)
+    return false
   }
 }
 
 const updateFeedApi = async (feedId, feedText) => {
   try {
-    const result = await ApiConfig.request({
+    const {data} = await ApiConfig.request({
       method: 'patch',
       url: `${process.env.REACT_APP_API}/app/feeds/${feedId}`,
       data: {feedText},
     })
-    console.log(result)
+
+    return data.isSuccess
   } catch (err) {
     console.log(err)
+    return false
   }
 }
 
-export {getFeedListApi, getCommentsApi, uploadFeedApi, updateFeedApi}
+const removeFeedApi = async feedId => {
+  console.log('removeFeedApi', feedId)
+  try {
+    const {data} = await ApiConfig.request({
+      method: 'patch',
+      url: `${process.env.REACT_APP_API}/app/feeds/${feedId}/delete-status`,
+    })
+
+    return data.isSuccess
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
+export {getFeedListApi, getCommentsApi, uploadFeedApi, updateFeedApi, removeFeedApi}

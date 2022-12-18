@@ -9,6 +9,7 @@ const AuthLayout = React.lazy(() => import('./layout/AuthLayout'))
 
 // Pages
 const Home = React.lazy(() => import('./pages/home/Home'))
+const Board = React.lazy(() => import('./pages/board/Board'))
 const Login = React.lazy(() => import('./pages/login/Login'))
 const LoginForm = React.lazy(() => import('./components/login/LoginForm'))
 const KakaoLoginForm = React.lazy(() => import('./components/login/KakaoLoginForm'))
@@ -40,6 +41,7 @@ const App = () => {
               <Route path='/app/kakao-login' name='Kakao Login Page' element={<KakaoLoginForm />} />
             </Route>
           </Route>
+          <Route path='/board' element={<Board />} />
           <Route element={<DefaultLayout />}>
             <Route exact path='/404' name='Page 404' element={<Page404 />} />
             <Route exact path='/500' name='Page 500' element={<Page500 />} />

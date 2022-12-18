@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+import {useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 import styled, {css} from 'styled-components'
 import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 
@@ -17,9 +19,12 @@ import {convertRelativeTimeFormat} from '../../utils/timeformat'
 import sampleProfile from '../../assets/images/sample_profile.svg'
 import Modal from '../common/Modal'
 import ModalContent from './ModalContent'
+import {toggleAction} from '../../store/actions/home'
 
 const FeedCard = (props, ref) => {
   const {feedId, contentsList, feedLoginId, feedText, feedCommentCount, feedCreatedAt} = props
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [modal, onToggleModal] = useToggle()
   const [comments, setComments] = useState([])
 
@@ -33,6 +38,16 @@ const FeedCard = (props, ref) => {
   useEffect(() => {
     getComments()
   }, [getComments])
+
+  const closeModal = b => {
+    dispatch(toggleAction(true))
+    onToggleModal(b)
+  }
+
+  const moveToFeed = () => {
+    dispatch()
+    navigate(`/board?boardId=${feedId}`)
+  }
 
   return (
     <Container ref={ref}>
@@ -71,9 +86,11 @@ const FeedCard = (props, ref) => {
           comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} toggleModal={onToggleModal} {...c} />)}
         <FeedCommand profile={sampleProfile} />
       </FeedContentWrapper>
-      <Modal toggle={modal} onToggle={onToggleModal}>
-        <ModalContent comments={comments} profileImage={sampleProfile} {...props} />
-      </Modal>
+      {modal && (
+        <Modal toggle={modal} onToggle={closeModal}>
+          <ModalContent comments={comments} profileImage={sampleProfile} {...props} />
+        </Modal>
+      )}
     </Container>
   )
 }

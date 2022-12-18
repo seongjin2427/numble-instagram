@@ -55,11 +55,11 @@ const CreateFeedStep = ({feedText, setFeedText, thumbnails}) => {
 
 const CreateFeedContainer = styled.div`
   display: flex;
-  width: 1000px;
+  width: 1072px;
   height: 660px;
 `
 const CarouselWrapper = styled.div`
-  width: 650px;
+  width: 65%;
   height: 650px;
 `
 
@@ -75,12 +75,12 @@ const Thumbnail = styled.img`
 `
 
 const ContentWrapper = styled.div`
-  width: 350px;
+  width: 35%;
   height: 100%;
 `
 
 const FeedTextWrapper = styled.div`
-  width: 350px;
+  width: 100%;
   padding: 20px;
   border-bottom: 1px solid ${({theme}) => theme.colors['gray-300']};
 `
@@ -111,4 +111,4 @@ const MenuWrapper = styled.div`
   }
 `
 
-export default CreateFeedStep
+export default React.memo(CreateFeedStep)

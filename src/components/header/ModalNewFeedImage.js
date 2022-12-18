@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
 import React, {useRef, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 
 import Icons from '../common/Icons'
@@ -14,16 +14,17 @@ import {uploadFeedApi} from '../../api/feed'
 import AddNewImageStep from './AddNewImageStep'
 import CreateFeedStep from './CreateFeedStep'
 import CancelModal from './CancelModal'
+import {toggleAction} from '../../store/actions/home'
 
 const ModalNewFeedImage = ({onToggle}) => {
-  const user = useSelector(({LoginReducer}) => LoginReducer.user)
-  const {loginId, realName} = user
+  const dispatch = useDispatch()
+  const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
 
-  const [cancelToggle, onCancelToggle] = useToggle()
   const [imageList, handleFiles] = useImageList()
   const [thumbnails, setThumbnails] = useState([])
-  const [isNext, setIsNext] = useState(false)
   const [feedText, setFeedText] = useState('')
+  const [cancelToggle, onCancelToggle] = useToggle()
+  const [isNext, setIsNext] = useState(false)
   const imgRef = useRef(null)
 
   const convertImageToUrl = files => {
@@ -33,9 +34,11 @@ const ModalNewFeedImage = ({onToggle}) => {
   const onChangeImage = e => {
     const files = Array.from(e.target.files)
     const converted = convertImageToUrl(files)
-    setThumbnails(converted)
 
-    handleFiles(files)
+    const result = handleFiles(files)
+    if (result) {
+      setThumbnails(converted)
+    }
   }
 
   const onDropFiles = e => {
@@ -64,7 +67,15 @@ const ModalNewFeedImage = ({onToggle}) => {
       )
 
       const feedData = {feedText, contentsUrls}
-      await uploadFeedApi(feedData)
+      const result = await uploadFeedApi(feedData)
+
+      if (result) {
+        alert('정상적으로 공유되었습니다.')
+      } else {
+        alert('에러가 발생했습니다. 다시 시도해주세요.')
+      }
+
+      dispatch(toggleAction({toggle: true}))
     } catch (err) {
       console.log(err)
       alert('에러가 발생했습니다! 다시 시도해주세요!')
@@ -93,7 +104,7 @@ const ModalNewFeedImage = ({onToggle}) => {
         )}
       </Header>
       <Body onDrop={onDropFiles} onDragOver={onDragOver}>
-        <input type='file' onChange={onChangeImage} ref={imgRef} multiple hidden />
+        <input type='file' onChange={onChangeImage} ref={imgRef} accept='.jpg, .png, jpeg' multiple hidden />
         {isNext ? (
           <CreateFeedStep feedText={feedText} setFeedText={setFeedText} thumbnails={thumbnails} />
         ) : (
