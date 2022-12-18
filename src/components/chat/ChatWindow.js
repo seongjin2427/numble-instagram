@@ -62,9 +62,10 @@ const ChatWindow = () => {
 
   useEffect(() => {
     if (target) {
-      const intersection = new IntersectionObserver(intersect)
-      intersection.observe(target)
+      const observer = new IntersectionObserver(intersect)
+      observer.observe(target)
       setTarget(null)
+      return () => observer && observer.disconnect()
     }
   }, [target, intersect])
 

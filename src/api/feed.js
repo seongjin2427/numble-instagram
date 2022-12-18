@@ -34,6 +34,25 @@ const getCommentsApi = async ({feedId, pageIndex, size}) => {
   }
 }
 
+const addCommentsApi = async ({feedId, commentText}) => {
+  try {
+    const {data} = await ApiConfig.request({
+      method: 'post',
+      url: `${process.env.REACT_APP_API}/app/feeds/${feedId}/comment`,
+      data: {
+        commentText,
+      },
+    })
+
+    console.log(data)
+
+    return data
+  } catch (err) {
+    console.log(err)
+    return false
+  }
+}
+
 const uploadFeedApi = async feed => {
   try {
     const {data} = await ApiConfig.request({
@@ -79,4 +98,4 @@ const removeFeedApi = async feedId => {
   }
 }
 
-export {getFeedListApi, getCommentsApi, uploadFeedApi, updateFeedApi, removeFeedApi}
+export {getFeedListApi, getCommentsApi, addCommentsApi, uploadFeedApi, updateFeedApi, removeFeedApi}

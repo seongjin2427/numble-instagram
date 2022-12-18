@@ -4,13 +4,11 @@ import {getFeedListApi} from '../api/feed'
 
 const useFeedList = () => {
   const [feeds, setFeeds] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [target, setTarget] = useState(null)
   const [isLast, setIsLast] = useState(false)
   const {current: page} = useRef({pageIndex: 0, size: 10})
 
   const getFeedItems = useCallback(async () => {
-    setIsLoading(true)
     const {isSuccess, result} = await getFeedListApi(page)
     if (isSuccess) {
       if (!result.length) {
@@ -20,17 +18,18 @@ const useFeedList = () => {
       setFeeds(prev => prev.concat(result))
       page.pageIndex += 1
     }
-    setIsLoading(false)
   }, [page])
 
   const onIntersect = useCallback(
-    async ([entry], observer) => {
-      if (entry.isIntersecting && !isLoading) {
-        observer.unobserve(entry.target)
-        await getFeedItems()
-      }
+    ([entry], observer) => {
+      setTimeout(async () => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target)
+          await getFeedItems()
+        }
+      }, 400)
     },
-    [isLoading, getFeedItems],
+    [getFeedItems],
   )
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const useFeedList = () => {
     return () => observer && observer.disconnect()
   }, [target, onIntersect])
 
-  return {isLast, isLoading, feeds, setTarget}
+  return {isLast, feeds, setTarget}
 }
 
 export default useFeedList

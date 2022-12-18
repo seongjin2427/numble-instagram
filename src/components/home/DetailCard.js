@@ -95,7 +95,7 @@ const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
             {convertRelativeTimeFormat(feedCreatedAt)}
           </Typography>
 
-          <FeedCommand />
+          <FeedCommand feedId={feedId} />
         </ContentFooter>
         <Modal width='448px' height='auto' toggle={toggleMore} onToggle={onToggleMore}>
           <MoreModal

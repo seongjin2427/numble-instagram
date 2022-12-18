@@ -72,23 +72,19 @@ const FeedCard = (props, ref) => {
       </FeedPhotoWrapper>
       <FeedContentWrapper>
         <FeedIconSet feedId={feedId} />
-        <FeedContent onClick={moveToFeed}>
+        <FeedContent>
           <Typography as='p' margin='0 0 10px 0' fontWeight={700}>
             좋아요 271개
           </Typography>
           <FeedText feedLoginId={feedLoginId} feedText={feedText} />
-          {feedCommentCount > 2 && (
-            <Typography as='p' fontSize='14px' margin='0 0 15px 0' color='gray-400' onClick={moveToFeed}>
-              댓글 32개 모두 보기
-            </Typography>
-          )}
+          {feedCommentCount > 2 && <CommentText onClick={moveToFeed}>댓글 {comments.length}개 모두 보기</CommentText>}
           <Typography as='p' fontSize='12px' margin='0 0 20px 0' color='gray-400'>
             {convertRelativeTimeFormat(feedCreatedAt)}
           </Typography>
         </FeedContent>
         {feedCommentCount < 3 &&
           comments.map(c => <CommandCard key={c.id} profile_uri={sampleProfile} moveToFeed={moveToFeed} {...c} />)}
-        <FeedCommand profile={sampleProfile} />
+        <FeedCommand feedId={feedId} profile={sampleProfile} />
       </FeedContentWrapper>
     </Container>
   )
@@ -110,12 +106,13 @@ const FeedPhotoWrapper = styled.div`
 
 const FeedPhotoBox = styled.div`
   width: 100%;
+  height: 100%;
 `
 
 const FeedPhotoImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 `
 
 const ProfileWrapper = styled.div`
@@ -137,6 +134,13 @@ const FeedContentWrapper = styled.div``
 
 const FeedContent = styled.div`
   margin: 0 17px;
+`
+
+const CommentText = styled.p`
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: ${({theme}) => theme.colors['gray-400']};
+  cursor: pointer;
 `
 
 export default React.memo(forwardRef(FeedCard))

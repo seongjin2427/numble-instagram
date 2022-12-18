@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
 import React, {useRef, useState} from 'react'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 
@@ -18,8 +17,6 @@ import CancelModal from './CancelModal'
 
 const ModalNewFeedImage = ({onToggle}) => {
   const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
-  const navigate = useNavigate()
-
   const [imageList, handleFiles] = useImageList()
   const [thumbnails, setThumbnails] = useState([])
   const [feedText, setFeedText] = useState('')

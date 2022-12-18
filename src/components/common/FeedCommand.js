@@ -3,21 +3,27 @@ import React, {useState} from 'react'
 import styled, {css} from 'styled-components'
 
 import Profile from './Profile'
+import {addCommentsApi} from '../../api/feed'
 
-const FeedCommand = ({profile}) => {
-  const [command, setCommand] = useState('')
+const FeedCommand = ({feedId, profile}) => {
+  const [commentText, setCommentText] = useState('')
 
-  const onChangeCommand = e => setCommand(e.target.value)
+  const onChangeCommand = e => setCommentText(e.target.value)
 
-  const clickHandler = e => {
+  const clickHandler = async e => {
     e.preventDefault()
+    setCommentText('')
+    const {isSuccess} = await addCommentsApi({feedId, commentText})
+    if (!isSuccess) {
+      alert('에러가 발생했습니다. 다시 시도해주세요.')
+    }
   }
 
   return (
     <CommandWrapper>
       {profile && <Profile size='30px' src={profile} color='gray-900' />}
-      <Input type='text' placeholder='댓글 달기...' onChange={onChangeCommand} value={command} />
-      <CommandButton onClick={clickHandler} disabled={!command.length}>
+      <Input type='text' placeholder='댓글 달기...' onChange={onChangeCommand} value={commentText} />
+      <CommandButton onClick={clickHandler} disabled={!commentText.length}>
         게시
       </CommandButton>
     </CommandWrapper>
