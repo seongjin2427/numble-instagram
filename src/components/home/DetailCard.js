@@ -17,7 +17,7 @@ import CommandCard from './CommandCard'
 import MoreModal from './MoreModal'
 import useToggle from '../../hooks/useToggle'
 import {removeFeedApi} from '../../api/feed'
-import {convertRelativeTimeFormat} from '../../utils/timeFormat'
+import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 const DetailCard = ({toggleMore, onToggleMore, onToggleModifyMode}) => {
   const feedData = useSelector(({FeedReducer}) => FeedReducer.feed)

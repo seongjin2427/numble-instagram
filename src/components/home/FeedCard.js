@@ -15,7 +15,7 @@ import CommandCard from './CommandCard'
 import {detailAction} from '../../store/actions/feed'
 import {fixScrollAction} from '../../store/actions/home'
 import {getCommentsApi} from '../../api/feed'
-import {convertRelativeTimeFormat} from '../../utils/timeFormat'
+import {convertRelativeTimeFormat} from '../../utils/timeformat'
 
 import sampleProfile from '../../assets/images/sample_profile.svg'
 
