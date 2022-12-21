@@ -1,15 +1,17 @@
-import React, {useCallback, useEffect} from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import React, {useCallback, useEffect} from 'react'
 
 import FeedList from '../../components/home/FeedList'
 import FeedTop from '../../components/home/FeedTop'
 import RecommandFriend from '../../components/home/RecommandFriend'
 import {RECOMMAND_FRIENDS} from '../../constants/sample'
-import {MEDEA_QUERY} from '../../style/media-query'
+import {MEDEA_QUERY} from '../../style/mediaQuery'
 
 const HomePage = () => {
   const {scrollY} = useSelector(({HomeReducer}) => HomeReducer.global)
+  const navigate = useNavigate()
 
   const moveToScroll = useCallback(() => {
     setTimeout(() => {
@@ -20,6 +22,13 @@ const HomePage = () => {
   useEffect(() => {
     moveToScroll()
   }, [moveToScroll])
+
+  useEffect(() => {
+    const isLogin = localStorage.getItem('jwt')
+    if (!isLogin) {
+      navigate('/login')
+    }
+  }, [navigate])
 
   return (
     <Home>

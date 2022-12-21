@@ -2,7 +2,7 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 
 import Typography from '../common/Typography'
-import {convertRelativeTimeFormat} from '../../utils/timeformat'
+import {convertRelativeTimeFormat} from '../../utils/timeFormat'
 
 // eslint-disable-next-line react/prop-types
 const CommandCard = ({loginId, profile_uri, commentText, updatedAt, cursor, moveToFeed}) => {

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import React, {useRef, useState} from 'react'
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 
@@ -8,12 +8,13 @@ import Icons from '../common/Icons'
 import useImageList from '../../hooks/useImageList'
 
 import Modal from '../common/Modal'
-import useToggle from '../../hooks/useToggle'
 import {storage} from '../../utils/firebase'
-import {uploadFeedApi} from '../../api/feed'
-import AddNewImageStep from './AddNewImageStep'
-import CreateFeedStep from './CreateFeedStep'
+import useToggle from '../../hooks/useToggle'
 import CancelModal from './CancelModal'
+import CreateFeedStep from './CreateFeedStep'
+import AddNewImageStep from './AddNewImageStep'
+import {uploadFeedApi} from '../../api/feed'
+import {refetchAction} from '../../store/actions/home'
 
 const ModalNewFeedImage = ({onToggle}) => {
   const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)
@@ -23,6 +24,7 @@ const ModalNewFeedImage = ({onToggle}) => {
   const [cancelToggle, onCancelToggle] = useToggle()
   const [isNext, setIsNext] = useState(false)
   const imgRef = useRef(null)
+  const dispatch = useDispatch()
 
   const convertImageToUrl = files => {
     return files.map(file => URL.createObjectURL(file))
@@ -72,6 +74,7 @@ const ModalNewFeedImage = ({onToggle}) => {
         alert('에러가 발생했습니다. 다시 시도해주세요.')
       }
 
+      dispatch(refetchAction({refetch: true}))
       closeModal()
     } catch (err) {
       console.log(err)

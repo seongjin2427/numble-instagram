@@ -24,7 +24,11 @@ const kakaoLoginApi = async code => {
     )
     const {access_token} = data
 
-    const result = await axios.post(`${process.env.REACT_APP_API}/app/kakao-sign-in`, {accessToken: access_token})
+    const result = await ApiConfig.request({
+      method: 'post',
+      url: `${process.env.REACT_APP_API}/app/kakao-sign-in`,
+      data: {accessToken: access_token},
+    })
 
     return result.data
   } catch (err) {
@@ -32,4 +36,17 @@ const kakaoLoginApi = async code => {
   }
 }
 
-export {userLoginApi, KAKAO_URL, kakaoLoginApi}
+const autoLoginApi = async () => {
+  try {
+    const result = await ApiConfig.request({
+      method: 'get',
+      url: `${process.env.REACT_APP_API}/app/auto-sign-in`,
+    })
+
+    return result.data
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export {userLoginApi, KAKAO_URL, kakaoLoginApi, autoLoginApi}

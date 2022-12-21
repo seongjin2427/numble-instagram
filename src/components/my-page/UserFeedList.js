@@ -1,10 +1,9 @@
 import styled from 'styled-components'
-import {useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import React, {useCallback, useEffect, useState} from 'react'
 
 import Icons from '../common/Icons'
-import {MEDEA_QUERY} from '../../style/media-query'
+import {MEDEA_QUERY} from '../../style/mediaQuery'
 import {toggleAction} from '../../store/actions/home'
 import {getMyFeedApi} from '../../api/myPage'
 

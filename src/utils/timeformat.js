@@ -8,7 +8,6 @@ const convertRelativeTimeFormat = receive => {
   const diff = t => dayjs(time).diff(now, t)
   const formatted = (v, t) => formatter.format(v, t)
 
-  const years = diff('years')
   const months = diff('months')
   const days = diff('days')
   const hours = diff('hours')

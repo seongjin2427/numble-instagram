@@ -68,10 +68,12 @@ const HEADER_MODAL_LIST = [
   },
   {
     icon: 'SettingsIcon',
-    url: '/',
+    url: '/login',
     title: '로그아웃',
     clickHandler(fn) {
-      console.log('/')
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('loginId')
+      fn()
     },
   },
 ]

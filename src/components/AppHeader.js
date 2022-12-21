@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import React, {useCallback, useEffect} from 'react'
 
 import Icons from './common/Icons'
-import {MEDEA_QUERY} from '../style/media-query'
+import {MEDEA_QUERY} from '../style/mediaQuery'
 
 import Modal from './common/Modal'
 import useToggle from '../hooks/useToggle'
@@ -16,6 +16,7 @@ import {HEADER_MENU_LIST, HEADER_MODAL_LIST} from '../constants/header'
 
 import Logo from '../assets/images/logo.svg'
 import Profile from '../assets/images/sample_profile.svg'
+import {autoLoginApi} from '../api/login'
 
 const AppHeader = () => {
   const {loginId} = useSelector(({LoginReducer}) => LoginReducer.user)
@@ -23,12 +24,23 @@ const AppHeader = () => {
   const [menuToggle, onMenuToggle] = useToggle()
   const dispatch = useDispatch()
 
+  const userLogout = useCallback(() => {
+    dispatch(loginAction({}))
+  }, [dispatch])
+
   const getUserInfo = useCallback(async () => {
     const loginId = localStorage.getItem('loginId')
-    const {isSuccess, result} = await getMyPageInfoApi(loginId)
+    const {isSuccess, result, code} = await getMyPageInfoApi(loginId)
 
     if (isSuccess) {
       dispatch(loginAction(result))
+    }
+
+    if (code === 3001) {
+      const {isSuccess: success, result} = await autoLoginApi()
+      if (success) {
+        // dispatch(loginAction(result))
+      }
     }
   }, [dispatch])
 
@@ -69,8 +81,8 @@ const AppHeader = () => {
               <Image src={Profile} alt='profile' />
             </ProfileWrapper>
             <ModalWrapper toggle={menuToggle}>
-              {HEADER_MODAL_LIST.map(({icon, title, url}, idx) => (
-                <ModalItem key={idx}>
+              {HEADER_MODAL_LIST.map(({icon, title, url, clickHandler}, idx) => (
+                <ModalItem key={idx} onClick={() => clickHandler(userLogout)}>
                   <Link to={url}>
                     <Icons icon={icon} size='20px' />
                     {title}

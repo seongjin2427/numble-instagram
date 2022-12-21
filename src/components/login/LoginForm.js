@@ -35,6 +35,7 @@ const LoginForm = () => {
       const {jwt, loginId} = result
       localStorage.setItem('jwt', jwt)
       localStorage.setItem('loginId', loginId)
+
       navigate('/')
       return
     }

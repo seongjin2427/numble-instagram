@@ -53,12 +53,12 @@ const MarketingAgree = () => {
   useEffect(() => {
     const {values} = getAllValues()
 
-    setAgreed(!values.some(v => v === false) ? true : false)
+    setAgreed(!values.some(v => v === false))
   }, [isValid, getAllValues])
 
   const allCheck = () => {
     const {keys, values} = getAllValues()
-    const isAllChecked = values.every(v => v) ? false : true
+    const isAllChecked = !values.every(v => v)
 
     for (const check of keys) setValue(check, isAllChecked)
 

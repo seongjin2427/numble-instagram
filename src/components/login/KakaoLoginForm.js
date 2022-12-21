@@ -34,7 +34,6 @@ const KakaoLoginForm = () => {
   useEffect(() => {
     const a = location.search.split('=')[1]
     getToken(a)
-    console.log(a)
   }, [getToken, location])
 
   const formMethods = useForm({
@@ -55,7 +54,7 @@ const KakaoLoginForm = () => {
       const {jwt, loginId} = result
       localStorage.setItem('access_token', jwt)
       localStorage.setItem('loginId', loginId)
-      // navigate('/')
+      navigate('/')
       return
     }
 

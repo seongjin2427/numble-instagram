@@ -2,7 +2,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import {MEDEA_QUERY} from '../../style/media-query'
+import {MEDEA_QUERY} from '../../style/mediaQuery'
 
 const FeedTop = ({friends}) => {
   return (
@@ -30,7 +30,8 @@ const Container = styled.div`
     border-radius: 10px;
 
     ${MEDEA_QUERY.WIDE_DESKTOP} {
-    display: none;
+      display: none;
+    }
   `}
 `
 
