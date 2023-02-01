@@ -1,23 +1,23 @@
 const HEADER_MENU_LIST = [
   {
     icon: 'HomeIcon',
-    url: '/',
+    url: process.env.REACT_APP_ORIGIN,
     black: true,
     clickHandler(fn) {
-      console.log('/')
+      console.log(process.env.REACT_APP_ORIGIN)
     },
   },
   {
     icon: 'SendIcon',
-    url: '/chat',
+    url: `${process.env.REACT_APP_ORIGIN}/chat`,
     black: false,
     clickHandler(fn) {
-      console.log('/')
+      console.log(process.env.REACT_APP_ORIGIN)
     },
   },
   {
     icon: 'AddIcon',
-    url: undefined,
+    url: process.env.REACT_APP_ORIGIN,
     black: false,
     clickHandler(fn) {
       fn(true)
@@ -25,10 +25,10 @@ const HEADER_MENU_LIST = [
   },
   {
     icon: 'HeartIcon',
-    url: undefined,
+    url: process.env.REACT_APP_ORIGIN,
     black: false,
     clickHandler(fn) {
-      console.log('/')
+      console.log(process.env.REACT_APP_ORIGIN)
     },
   },
 ]
@@ -36,15 +36,15 @@ const HEADER_MENU_LIST = [
 const HEADER_MODAL_LIST = [
   {
     icon: 'UserIcon',
-    url: '/my-page',
+    url: `${process.env.REACT_APP_ORIGIN}/my-page`,
     title: '프로필',
     clickHandler(fn) {
-      console.log('/')
+      console.log(process.env.REACT_APP_ORIGIN)
     },
   },
   {
     icon: 'BookmarkIcon',
-    url: '/',
+    url: process.env.REACT_APP_ORIGIN,
     title: '저장됨',
     clickHandler(fn) {
       console.log('/')
@@ -52,7 +52,7 @@ const HEADER_MODAL_LIST = [
   },
   {
     icon: 'SettingsIcon',
-    url: '/',
+    url: process.env.REACT_APP_ORIGIN,
     title: '설정',
     clickHandler(fn) {
       console.log('/')
@@ -60,7 +60,7 @@ const HEADER_MODAL_LIST = [
   },
   {
     icon: 'AlertCircleIcon',
-    url: '/',
+    url: process.env.REACT_APP_ORIGIN,
     title: '문제 신고',
     clickHandler(fn) {
       console.log('/')
@@ -68,7 +68,7 @@ const HEADER_MODAL_LIST = [
   },
   {
     icon: 'SettingsIcon',
-    url: '/login',
+    url: `${process.env.REACT_APP_ORIGIN}/login`,
     title: '로그아웃',
     clickHandler(fn) {
       localStorage.removeItem('jwt')

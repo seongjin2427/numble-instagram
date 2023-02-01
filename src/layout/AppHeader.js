@@ -57,7 +57,7 @@ const AppHeader = () => {
     <Header>
       <HeaderWrapper>
         <ImageWrapper>
-          <Link to='/'>
+          <Link to={process.env.REACT_APP_ORIGIN}>
             <Image src={Logo} alt='logo' />
           </Link>
         </ImageWrapper>
