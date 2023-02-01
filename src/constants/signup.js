@@ -1,3 +1,6 @@
+// icon 컴포넌트명에 대해 위험할 수 있음
+// 오타 등의 에러가 나면 원인을 확인하기 어려움
+// -> jsx 아이콘 컴포넌트로 아예 추가를 하는게 더 좋음
 const SIGN_UP_INPUTS = [
   {
     id: 'phoneNumber',

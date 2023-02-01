@@ -8,8 +8,6 @@ import * as S from './Login.styled'
 const LoginPage = () => {
   const navigate = useNavigate()
 
-  const moveToUrl = url => navigate(url)
-
   return (
     <S.Container>
       <S.LoginFormArea>
@@ -17,7 +15,7 @@ const LoginPage = () => {
       </S.LoginFormArea>
       <S.LoginArea>
         <S.P style={{fontWeight: 600}}>
-          계정이 없으신가요? <em onClick={() => moveToUrl('/signup')}>가입하기</em>
+          계정이 없으신가요? <em onClick={() => navigate('/signup')}>가입하기</em>
         </S.P>
       </S.LoginArea>
       <S.DownloadApp>

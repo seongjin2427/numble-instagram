@@ -15,7 +15,8 @@ import Logo from '../../assets/images/logo.svg'
 import KakaoButton from '../../assets/images/kakao-login-btn.svg'
 import {checkDuplicateLoginIdApi} from '../../api/signup'
 
-const FirstInfo = () => {
+// First 너무 제한적인 비즈니스 컴포넌트명
+const UserInformation = () => {
   const signup = useSelector(({SignUpReducer}) => SignUpReducer.signUp)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -78,6 +79,9 @@ const FirstInfo = () => {
             가입
           </Button>
           <AlertMessage>
+            {/* 논리 연산자를 렌더링에 이용하는것은 위험!
+              ?? 널리쉬 연산자를 사용하는게 더 예상하지 못한 에러를 막는데 도움이 됨 */}
+            {/* {errors?.phoneNumber?.message ?? errors?.realName?.message ?? errors?.loginId?.message} */}
             {errors?.phoneNumber?.message || errors?.realName?.message || errors?.loginId?.message}
           </AlertMessage>
         </Form>
@@ -121,4 +125,4 @@ const InputWrapper = styled.div`
   margin-bottom: 20px;
 `
 
-export default FirstInfo
+export default UserInformation

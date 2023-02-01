@@ -8,8 +8,6 @@ import * as S from './SignUp.styled'
 const SignUp = () => {
   const navigate = useNavigate()
 
-  const moveToUrl = url => navigate(url)
-
   return (
     <S.Container>
       <S.SignUpArea>
@@ -17,7 +15,7 @@ const SignUp = () => {
       </S.SignUpArea>
       <S.LoginArea>
         <S.P style={{fontWeight: 600}}>
-          계정이 있으신가요? <em onClick={() => moveToUrl('/login')}>로그인</em>
+          계정이 있으신가요? <em onClick={() => navigate('/login')}>로그인</em>
         </S.P>
       </S.LoginArea>
       <S.DownloadApp>
