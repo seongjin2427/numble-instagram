@@ -57,14 +57,8 @@ ito-88
 │  │  ├─ icons
 │  │  └─ images
 │  ├─ components
-│  │  ├─ AppHeader.js
-│  │  ├─ chat
 │  │  ├─ common
 │  │  ├─ header
-│  │  ├─ home
-│  │  ├─ login
-│  │  ├─ my-page
-│  │  └─ signup
 │  ├─ constants
 │  ├─ dataManager
 │  ├─ hooks

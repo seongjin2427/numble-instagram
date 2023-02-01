@@ -10,3 +10,7 @@ build/*
 build-dev/*
 build-stage/*
 dist/*
+.env.development
+.env.development.local
+.env.production
+.env.stage
