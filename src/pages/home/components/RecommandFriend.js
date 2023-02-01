@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import {useSelector} from 'react-redux'
 
 import styled from 'styled-components'
-import Profile from '../common/Profile'
+import Profile from '../../../components/common/Profile'
+import Typography from '../../../components/common/Typography'
 
-import sample from '../../assets/images/sample_profile.svg'
-import Typography from '../common/Typography'
-import {useSelector} from 'react-redux'
+import sample from '../../../assets/images/sample_profile.svg'
 
 const RecommandFriend = ({friends}) => {
   const {loginId, realName} = useSelector(({LoginReducer}) => LoginReducer.user)

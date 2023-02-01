@@ -5,15 +5,15 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {useNavigate} from 'react-router-dom'
 import {FormProvider, useForm} from 'react-hook-form'
 
-import Button from '../../components/common/Button'
-import CommonInput from '../../components/common/Input'
-import {SIGN_UP_INPUTS} from '../../constants/signup'
-import {SIGN_UP_SCHEMA} from '../../constants/schema'
-import {firstUserInfoAction} from '../../store/actions/signup'
+import Button from '../../../components/common/Button'
+import CommonInput from '../../../components/common/Input'
+import {SIGN_UP_INPUTS} from '../../../constants/signup'
+import {SIGN_UP_SCHEMA} from '../../../constants/schema'
+import {firstUserInfoAction} from '../../../store/actions/signup'
 
-import Logo from '../../assets/images/logo.svg'
-import KakaoButton from '../../assets/images/kakao-login-btn.svg'
-import {checkDuplicateLoginIdApi} from '../../api/signup'
+import Logo from '../../../assets/images/logo.svg'
+import KakaoButton from '../../../assets/images/kakao-login-btn.svg'
+import {checkDuplicateLoginIdApi} from '../../../api/signup'
 
 // First 너무 제한적인 비즈니스 컴포넌트명
 const UserInformation = () => {

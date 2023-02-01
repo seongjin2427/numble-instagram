@@ -1,12 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import {useSelector} from 'react-redux'
-
-import ModalContent from '../../components/home/FeedDetail'
+import ModalContent from '../../pages/home/components/FeedDetail'
 
 const Board = () => {
-  const feedData = useSelector(({FeedReducer}) => FeedReducer.feed)
-
   return (
     <Container>
       <DetailCard>

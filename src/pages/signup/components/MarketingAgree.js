@@ -5,11 +5,11 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {FormProvider, useForm, useFormContext} from 'react-hook-form'
 import React, {forwardRef, useCallback, useEffect, useState} from 'react'
 
-import Icons from '../common/Icons'
-import Button from '../common/Button'
-import Typography from '../common/Typography'
-import {userSignupApi} from '../../api/signup'
-import {MARKETING_AGREED_SCHEMA} from '../../constants/schema'
+import Icons from '../../../components/common/Icons'
+import Button from '../../../components/common/Button'
+import Typography from '../../../components/common/Typography'
+import {userSignupApi} from '../../../api/signup'
+import {MARKETING_AGREED_SCHEMA} from '../../../constants/schema'
 
 const MarketingAgree = () => {
   const userInfo = useSelector(({SignUpReducer}) => SignUpReducer.signUp)

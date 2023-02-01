@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {useSelector} from 'react-redux'
 
-import useToggle from '../../hooks/useToggle'
+import useToggle from '../../../hooks/useToggle'
 import ModifyStep from './ModifyStep'
 import DetailModal from './DetailCard'
 

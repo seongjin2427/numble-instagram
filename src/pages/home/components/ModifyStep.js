@@ -4,12 +4,12 @@ import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import React, {useState} from 'react'
 
-import Modal from '../common/Modal'
-import useToggle from '../../hooks/useToggle'
-import Typography from '../common/Typography'
-import CancelModal from '../header/CancelModal'
-import CreateFeedStep from '../header/CreateFeedStep'
-import {updateFeedApi} from '../../api/feed'
+import Modal from '../../../components/common/Modal'
+import useToggle from '../../../hooks/useToggle'
+import Typography from '../../../components/common/Typography'
+import CancelModal from '../../../components/header/CancelModal'
+import CreateFeedStep from '../../../components/header/CreateFeedStep'
+import {updateFeedApi} from '../../../api/feed'
 
 const ModifyStep = ({onToggleMore, onToggleModifyMode}) => {
   const {feedId, contentsList, feedText} = useSelector(({FeedReducer}) => FeedReducer.feed)

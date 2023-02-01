@@ -2,7 +2,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import {MEDEA_QUERY} from '../../style/mediaQuery'
+import {MEDEA_QUERY} from '../../../style/mediaQuery'
 
 const FeedTop = ({friends}) => {
   return (

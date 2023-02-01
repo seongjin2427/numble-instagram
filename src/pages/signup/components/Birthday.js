@@ -11,7 +11,7 @@ import {BIRTHDATE_SCHEMA} from '../../../constants/schema'
 import {addBirthdayAction} from '../../../store/actions/signup'
 import {makeDate, makeYearMonth} from '../../../utils/signup'
 
-import Cake from '../../assets/images/cake.svg'
+import Cake from '../../../assets/images/cake.svg'
 
 const Birthday = () => {
   const {year, month, date} = useSelector(({SignUpReducer}) => SignUpReducer.signUp)

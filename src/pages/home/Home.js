@@ -3,9 +3,9 @@ import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import React, {useCallback, useEffect} from 'react'
 
-import FeedList from '../../components/home/FeedList'
-import FeedTop from '../../components/home/FeedTop'
-import RecommandFriend from '../../components/home/RecommandFriend'
+import FeedList from './components/FeedList'
+import FeedTop from './components/FeedTop'
+import RecommandFriend from './components/RecommandFriend'
 import {RECOMMAND_FRIENDS} from '../../constants/sample'
 import {MEDEA_QUERY} from '../../style/mediaQuery'
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import React, {useEffect} from 'react'
 
-import UserProfile from '../../components/my-page/UserProfile'
+import UserProfile from './components/UserProfile'
 import UserFeedList from './components/UserFeedList'
 
 const MyPage = () => {

@@ -10,8 +10,8 @@ import {LOGIN_INPUTS} from '../../../constants/login'
 import {LOGIN_SCHEMA} from '../../../constants/schema'
 import {kakaoLoginApi, KAKAO_URL, userLoginApi} from '../../../api/login'
 
-import Logo from '../../assets/images/logo.svg'
-import KakaoButton from '../../assets/images/kakao-login-btn.svg'
+import Logo from '../../../assets/images/logo.svg'
+import KakaoButton from '../../../assets/images/kakao-login-btn.svg'
 
 const KakaoLoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')

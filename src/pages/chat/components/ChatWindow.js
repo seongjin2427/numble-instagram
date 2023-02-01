@@ -3,10 +3,10 @@ import styled, {css} from 'styled-components'
 import {useNavigate} from 'react-router-dom'
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 
-import Icons from '../common/Icons'
-import Profile from '../common/Profile'
-import {RECOMMAND_FRIENDS} from '../../constants/sample'
-import {getChatsListApi, sendChatApi} from '../../api/chat'
+import Icons from '../../../components/common/Icons'
+import Profile from '../../../components/common/Profile'
+import {RECOMMAND_FRIENDS} from '../../../constants/sample'
+import {getChatsListApi, sendChatApi} from '../../../api/chat'
 
 const ChatWindow = () => {
   const [chatting, setChatting] = useState([])

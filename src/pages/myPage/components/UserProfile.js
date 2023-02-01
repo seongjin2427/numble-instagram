@@ -3,8 +3,8 @@ import React from 'react'
 import styled, {css} from 'styled-components'
 import {useSelector} from 'react-redux'
 
-import sampleProfile from '../../assets/images/sample_profile.svg'
-import {MEDEA_QUERY} from '../../style/mediaQuery'
+import sampleProfile from '../../../assets/images/sample_profile.svg'
+import {MEDEA_QUERY} from '../../../style/mediaQuery'
 
 const UserProfile = () => {
   const userInfo = useSelector(({LoginReducer}) => LoginReducer.user)

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import FeedCard from './FeedCard'
-import useFeedList from '../../hooks/useFeedList'
+import useFeedList from '../../../hooks/useFeedList'
 
 const FeedList = () => {
   const {feeds, setTarget, isLast} = useFeedList()

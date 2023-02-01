@@ -2,8 +2,8 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import useToggle from '../../hooks/useToggle'
-import Typography from '../common/Typography'
+import useToggle from '../../../hooks/useToggle'
+import Typography from '../../../components/common/Typography'
 
 const FeedText = ({feedLoginId, feedText}) => {
   const [toggle, onToggle] = useToggle()

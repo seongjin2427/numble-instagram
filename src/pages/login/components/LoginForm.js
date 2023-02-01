@@ -4,14 +4,14 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import React, {useState} from 'react'
 import {useForm, FormProvider} from 'react-hook-form'
 
-import Button from '../../components/common/Button'
-import CommonInput from '../../components/common/Input'
-import {LOGIN_INPUTS} from '../../constants/login'
-import {LOGIN_SCHEMA} from '../../constants/schema'
-import {KAKAO_URL, userLoginApi} from '../../api/login'
+import Button from '../../../components/common/Button'
+import CommonInput from '../../../components/common/Input'
+import {LOGIN_INPUTS} from '../../../constants/login'
+import {LOGIN_SCHEMA} from '../../../constants/schema'
+import {KAKAO_URL, userLoginApi} from '../../../api/login'
 
-import Logo from '../../assets/images/logo.svg'
-import KakaoButton from '../../assets/images/kakao-login-btn.svg'
+import Logo from '../../../assets/images/logo.svg'
+import KakaoButton from '../../../assets/images/kakao-login-btn.svg'
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
