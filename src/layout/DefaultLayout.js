@@ -1,5 +1,5 @@
 import React from 'react'
-import AppHeader from '../components/AppHeader'
+import AppHeader from './AppHeader'
 import styled from 'styled-components'
 import {Outlet} from 'react-router'
 import {MEDEA_QUERY} from '../style/mediaQuery'

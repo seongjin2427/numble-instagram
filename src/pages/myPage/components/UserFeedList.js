@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import {useDispatch, useSelector} from 'react-redux'
 import React, {useCallback, useEffect, useState} from 'react'
 
-import Icons from '../common/Icons'
-import {MEDEA_QUERY} from '../../style/mediaQuery'
-import {toggleAction} from '../../store/actions/home'
-import {getMyFeedApi} from '../../api/myPage'
+import Icons from '../../../components/common/Icons'
+import {MEDEA_QUERY} from '../../../style/mediaQuery'
+import {toggleAction} from '../../../store/actions/home'
+import {getMyFeedApi} from '../../../api/myPage'
 
 const UserFeedList = () => {
   const {toggle} = useSelector(({HomeReducer}) => HomeReducer.global)

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import React, {useEffect} from 'react'
 
 import UserProfile from '../../components/my-page/UserProfile'
-import UserFeedList from '../../components/my-page/UserFeedList'
+import UserFeedList from './components/UserFeedList'
 
 const MyPage = () => {
   const navigate = useNavigate()

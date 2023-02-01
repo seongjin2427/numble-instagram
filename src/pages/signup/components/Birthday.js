@@ -5,11 +5,11 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {useNavigate} from 'react-router-dom'
 import {FormProvider, useForm} from 'react-hook-form'
 
-import Select from '../common/Select'
-import Button from '../common/Button'
-import {BIRTHDATE_SCHEMA} from '../../constants/schema'
-import {addBirthdayAction} from '../../store/actions/signup'
-import {makeDate, makeYearMonth} from '../../utils/signup'
+import Select from '../../../components/common/Select'
+import Button from '../../../components/common/Button'
+import {BIRTHDATE_SCHEMA} from '../../../constants/schema'
+import {addBirthdayAction} from '../../../store/actions/signup'
+import {makeDate, makeYearMonth} from '../../../utils/signup'
 
 import Cake from '../../assets/images/cake.svg'
 

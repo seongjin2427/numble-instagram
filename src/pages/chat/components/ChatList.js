@@ -1,8 +1,8 @@
 import React from 'react'
 import styled, {css} from 'styled-components'
 
-import Profile from '../common/Profile'
-import {RECOMMAND_FRIENDS} from '../../constants/sample'
+import Profile from '../../../components/common/Profile'
+import {RECOMMAND_FRIENDS} from '../../../constants/sample'
 
 const ChatList = () => {
   const loginId = localStorage.getItem('loginId')
